@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6211" systemVersion="14A298i" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="vXZ-lx-hvc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14C1510" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="vXZ-lx-hvc">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6204"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
         <scene sceneID="ufC-wZ-h7g">
             <objects>
-                <viewController id="vXZ-lx-hvc" customClass="ViewController" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="vXZ-lx-hvc" customClass="ViewController" customModule="Habit_Log" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="jyV-Pf-zRb"/>
                         <viewControllerLayoutGuide type="bottom" id="2fi-mo-0CV"/>
@@ -15,8 +15,58 @@
                     <view key="view" contentMode="scaleToFill" id="kh9-bI-dsS">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="May, 2015" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l5P-34-OrB">
+                                <rect key="frame" x="260" y="35" width="80" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Auq-1G-0SY" customClass="CVCalendarMenuView" customModule="Habit_Log" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="64" width="600" height="30"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="Pfg-KU-fx0"/>
+                                </constraints>
+                                <connections>
+                                    <outlet property="menuViewDelegate" destination="vXZ-lx-hvc" id="vSe-RP-K3G"/>
+                                </connections>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Di9-BH-HSB" customClass="CVCalendarView" customModule="Habit_Log" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="95" width="600" height="300"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="300" id="Kno-09-6L5"/>
+                                </constraints>
+                                <connections>
+                                    <outlet property="calendarDelegate" destination="vXZ-lx-hvc" id="HkI-l1-MYv"/>
+                                </connections>
+                            </view>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="l5P-34-OrB" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="15" id="86f-v9-1Ml"/>
+                            <constraint firstItem="Di9-BH-HSB" firstAttribute="leading" secondItem="Auq-1G-0SY" secondAttribute="leading" id="F58-ag-7ER"/>
+                            <constraint firstItem="Di9-BH-HSB" firstAttribute="trailing" secondItem="Auq-1G-0SY" secondAttribute="trailing" id="WSv-nM-PVt"/>
+                            <constraint firstAttribute="width" secondItem="Auq-1G-0SY" secondAttribute="width" id="WVC-GU-hab"/>
+                            <constraint firstAttribute="centerX" secondItem="l5P-34-OrB" secondAttribute="centerX" id="iT9-ge-8kb"/>
+                            <constraint firstItem="Auq-1G-0SY" firstAttribute="top" secondItem="l5P-34-OrB" secondAttribute="bottom" constant="8" id="jUV-Er-Lec"/>
+                            <constraint firstItem="Di9-BH-HSB" firstAttribute="top" secondItem="Auq-1G-0SY" secondAttribute="bottom" constant="1" id="mF9-Wa-7tG"/>
+                            <constraint firstItem="l5P-34-OrB" firstAttribute="centerX" secondItem="Auq-1G-0SY" secondAttribute="centerX" id="q1E-np-fWv"/>
+                            <constraint firstItem="Di9-BH-HSB" firstAttribute="width" secondItem="kh9-bI-dsS" secondAttribute="width" id="tG1-an-AJb"/>
+                            <constraint firstAttribute="centerY" secondItem="l5P-34-OrB" secondAttribute="centerY" constant="269.5" id="whM-64-Sfc"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="whM-64-Sfc"/>
+                            </mask>
+                        </variation>
                     </view>
+                    <connections>
+                        <outlet property="calendarView" destination="Di9-BH-HSB" id="2B9-wo-Dpw"/>
+                        <outlet property="menuView" destination="Auq-1G-0SY" id="3ck-6h-sLF"/>
+                        <outlet property="monthLabel" destination="l5P-34-OrB" id="MWr-1A-NNZ"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
