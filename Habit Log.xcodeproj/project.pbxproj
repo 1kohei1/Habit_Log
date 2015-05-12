@@ -40,6 +40,7 @@
 		199693151B02A32700275F4D /* CVSelectionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199692FB1B02A32700275F4D /* CVSelectionType.swift */; };
 		199693161B02A32700275F4D /* CVSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199692FC1B02A32700275F4D /* CVSet.swift */; };
 		199693171B02A32700275F4D /* CVShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199692FD1B02A32700275F4D /* CVShape.swift */; };
+		199693191B02A78000275F4D /* Habit_Log_screenshot_1.png in Resources */ = {isa = PBXBuildFile; fileRef = 199693181B02A78000275F4D /* Habit_Log_screenshot_1.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -90,6 +91,7 @@
 		199692FB1B02A32700275F4D /* CVSelectionType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CVSelectionType.swift; sourceTree = "<group>"; };
 		199692FC1B02A32700275F4D /* CVSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CVSet.swift; sourceTree = "<group>"; };
 		199692FD1B02A32700275F4D /* CVShape.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CVShape.swift; sourceTree = "<group>"; };
+		199693181B02A78000275F4D /* Habit_Log_screenshot_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Habit_Log_screenshot_1.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -133,6 +135,7 @@
 			children = (
 				199692C11B02A30600275F4D /* AppDelegate.swift */,
 				199692C61B02A30600275F4D /* ViewController.swift */,
+				199693181B02A78000275F4D /* Habit_Log_screenshot_1.png */,
 				199692C81B02A30600275F4D /* Main.storyboard */,
 				199692CB1B02A30600275F4D /* Images.xcassets */,
 				199692CD1B02A30600275F4D /* LaunchScreen.xib */,
@@ -276,6 +279,7 @@
 				199692CA1B02A30600275F4D /* Main.storyboard in Resources */,
 				199692CF1B02A30600275F4D /* LaunchScreen.xib in Resources */,
 				199692CC1B02A30600275F4D /* Images.xcassets in Resources */,
+				199693191B02A78000275F4D /* Habit_Log_screenshot_1.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
