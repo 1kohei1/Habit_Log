@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1982B28D1B03A674007BD023 /* check52.png in Resources */ = {isa = PBXBuildFile; fileRef = 1982B28C1B03A674007BD023 /* check52.png */; };
+		1982B2911B03E988007BD023 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1982B2901B03E988007BD023 /* QuartzCore.framework */; };
 		199692C21B02A30600275F4D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199692C11B02A30600275F4D /* AppDelegate.swift */; };
 		199692C51B02A30600275F4D /* Habit_Log.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 199692C31B02A30600275F4D /* Habit_Log.xcdatamodeld */; };
 		199692C71B02A30600275F4D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199692C61B02A30600275F4D /* ViewController.swift */; };
@@ -54,6 +56,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1982B28C1B03A674007BD023 /* check52.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = check52.png; sourceTree = "<group>"; };
+		1982B2901B03E988007BD023 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		199692BC1B02A30600275F4D /* Habit Log.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Habit Log.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		199692C01B02A30600275F4D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		199692C11B02A30600275F4D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -99,6 +103,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1982B2911B03E988007BD023 /* QuartzCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -115,6 +120,7 @@
 		199692B31B02A30500275F4D = {
 			isa = PBXGroup;
 			children = (
+				1982B2901B03E988007BD023 /* QuartzCore.framework */,
 				199692BE1B02A30600275F4D /* Habit Log */,
 				199692D71B02A30600275F4D /* Habit LogTests */,
 				199692BD1B02A30600275F4D /* Products */,
@@ -135,8 +141,8 @@
 			children = (
 				199692C11B02A30600275F4D /* AppDelegate.swift */,
 				199692C61B02A30600275F4D /* ViewController.swift */,
-				199693181B02A78000275F4D /* Habit_Log_screenshot_1.png */,
 				199692C81B02A30600275F4D /* Main.storyboard */,
+				1982B28C1B03A674007BD023 /* check52.png */,
 				199692CB1B02A30600275F4D /* Images.xcassets */,
 				199692CD1B02A30600275F4D /* LaunchScreen.xib */,
 				199692C31B02A30600275F4D /* Habit_Log.xcdatamodeld */,
@@ -166,6 +172,7 @@
 				199692FB1B02A32700275F4D /* CVSelectionType.swift */,
 				199692FC1B02A32700275F4D /* CVSet.swift */,
 				199692FD1B02A32700275F4D /* CVShape.swift */,
+				199693181B02A78000275F4D /* Habit_Log_screenshot_1.png */,
 				199692BF1B02A30600275F4D /* Supporting Files */,
 			);
 			path = "Habit Log";
@@ -278,6 +285,7 @@
 			files = (
 				199692CA1B02A30600275F4D /* Main.storyboard in Resources */,
 				199692CF1B02A30600275F4D /* LaunchScreen.xib in Resources */,
+				1982B28D1B03A674007BD023 /* check52.png in Resources */,
 				199692CC1B02A30600275F4D /* Images.xcassets in Resources */,
 				199693191B02A78000275F4D /* Habit_Log_screenshot_1.png in Resources */,
 			);
@@ -455,6 +463,7 @@
 				INFOPLIST_FILE = "Habit Log/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -465,6 +474,7 @@
 				INFOPLIST_FILE = "Habit Log/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
@@ -521,6 +531,7 @@
 				199692E01B02A30600275F4D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		199692E11B02A30600275F4D /* Build configuration list for PBXNativeTarget "Habit LogTests" */ = {
 			isa = XCConfigurationList;
@@ -529,6 +540,7 @@
 				199692E31B02A30600275F4D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 

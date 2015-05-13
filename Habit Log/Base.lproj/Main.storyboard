@@ -12,18 +12,12 @@
                         <viewControllerLayoutGuide type="top" id="jyV-Pf-zRb"/>
                         <viewControllerLayoutGuide type="bottom" id="2fi-mo-0CV"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="kh9-bI-dsS">
+                    <view key="view" opaque="NO" contentMode="scaleToFill" id="kh9-bI-dsS">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="May, 2015" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l5P-34-OrB">
-                                <rect key="frame" x="260" y="35" width="80" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Auq-1G-0SY" customClass="CVCalendarMenuView" customModule="Habit_Log" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="64" width="600" height="30"/>
+                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Auq-1G-0SY" customClass="CVCalendarMenuView" customModule="Habit_Log" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="98" width="600" height="30"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="Pfg-KU-fx0"/>
@@ -32,38 +26,66 @@
                                     <outlet property="menuViewDelegate" destination="vXZ-lx-hvc" id="vSe-RP-K3G"/>
                                 </connections>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Di9-BH-HSB" customClass="CVCalendarView" customModule="Habit_Log" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="95" width="600" height="300"/>
+                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Di9-BH-HSB" customClass="CVCalendarView" customModule="Habit_Log" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="129" width="600" height="360"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="300" id="Kno-09-6L5"/>
+                                    <constraint firstAttribute="height" constant="360" id="Kno-09-6L5"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="300" id="bQr-LE-oMc"/>
                                 </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="bQr-LE-oMc"/>
+                                    </mask>
+                                </variation>
                                 <connections>
                                     <outlet property="calendarDelegate" destination="vXZ-lx-hvc" id="HkI-l1-MYv"/>
                                 </connections>
                             </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Habit Title" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wiN-uA-dcg">
+                                <rect key="frame" x="0.0" y="28" width="600" height="33"/>
+                                <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="27"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WpA-qE-hpF">
+                                <rect key="frame" x="0.0" y="69" width="600" height="1"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="1" id="DDb-qh-zTY"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="May, 2015" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l5P-34-OrB">
+                                <rect key="frame" x="259" y="81" width="83" height="25"/>
+                                <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="18"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="l5P-34-OrB" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="15" id="86f-v9-1Ml"/>
+                            <constraint firstItem="WpA-qE-hpF" firstAttribute="top" secondItem="wiN-uA-dcg" secondAttribute="bottom" constant="8" id="1JT-QP-cOO"/>
+                            <constraint firstItem="WpA-qE-hpF" firstAttribute="leading" secondItem="wiN-uA-dcg" secondAttribute="leading" id="3Ra-xQ-eb2"/>
+                            <constraint firstItem="l5P-34-OrB" firstAttribute="top" secondItem="WpA-qE-hpF" secondAttribute="bottom" constant="11" id="6B8-Ws-M9D"/>
                             <constraint firstItem="Di9-BH-HSB" firstAttribute="leading" secondItem="Auq-1G-0SY" secondAttribute="leading" id="F58-ag-7ER"/>
+                            <constraint firstItem="WpA-qE-hpF" firstAttribute="trailing" secondItem="wiN-uA-dcg" secondAttribute="trailing" id="HhW-5r-3L6"/>
+                            <constraint firstItem="wiN-uA-dcg" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="8" id="K3X-zc-XBB"/>
+                            <constraint firstAttribute="width" secondItem="WpA-qE-hpF" secondAttribute="width" id="NdJ-GX-q0p"/>
                             <constraint firstItem="Di9-BH-HSB" firstAttribute="trailing" secondItem="Auq-1G-0SY" secondAttribute="trailing" id="WSv-nM-PVt"/>
                             <constraint firstAttribute="width" secondItem="Auq-1G-0SY" secondAttribute="width" id="WVC-GU-hab"/>
-                            <constraint firstAttribute="centerX" secondItem="l5P-34-OrB" secondAttribute="centerX" id="iT9-ge-8kb"/>
                             <constraint firstItem="Auq-1G-0SY" firstAttribute="top" secondItem="l5P-34-OrB" secondAttribute="bottom" constant="8" id="jUV-Er-Lec"/>
+                            <constraint firstAttribute="centerX" secondItem="l5P-34-OrB" secondAttribute="centerX" id="jbQ-bV-PDy"/>
+                            <constraint firstAttribute="width" secondItem="wiN-uA-dcg" secondAttribute="width" id="kfD-gE-zRV"/>
                             <constraint firstItem="Di9-BH-HSB" firstAttribute="top" secondItem="Auq-1G-0SY" secondAttribute="bottom" constant="1" id="mF9-Wa-7tG"/>
-                            <constraint firstItem="l5P-34-OrB" firstAttribute="centerX" secondItem="Auq-1G-0SY" secondAttribute="centerX" id="q1E-np-fWv"/>
                             <constraint firstItem="Di9-BH-HSB" firstAttribute="width" secondItem="kh9-bI-dsS" secondAttribute="width" id="tG1-an-AJb"/>
-                            <constraint firstAttribute="centerY" secondItem="l5P-34-OrB" secondAttribute="centerY" constant="269.5" id="whM-64-Sfc"/>
                         </constraints>
-                        <variation key="default">
-                            <mask key="constraints">
-                                <exclude reference="whM-64-Sfc"/>
-                            </mask>
-                        </variation>
                     </view>
                     <connections>
+                        <outlet property="borderLabel" destination="WpA-qE-hpF" id="hRL-s3-kWX"/>
                         <outlet property="calendarView" destination="Di9-BH-HSB" id="2B9-wo-Dpw"/>
+                        <outlet property="habitTitle" destination="wiN-uA-dcg" id="0f7-j6-SpP"/>
                         <outlet property="menuView" destination="Auq-1G-0SY" id="3ck-6h-sLF"/>
                         <outlet property="monthLabel" destination="l5P-34-OrB" id="MWr-1A-NNZ"/>
                     </connections>

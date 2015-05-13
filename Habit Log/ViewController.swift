@@ -7,25 +7,31 @@
 //
 
 import UIKit
+import QuartzCore
 
 class ViewController: UIViewController {
 
     @IBOutlet weak var monthLabel: UILabel!
     @IBOutlet weak var menuView: CVCalendarMenuView!
     @IBOutlet weak var calendarView: CVCalendarView!
+    @IBOutlet weak var habitTitle: UILabel!
+    @IBOutlet weak var borderLabel: UILabel!
+    
+    let BORDER_COLOR: UIColor = UIColor(red: 0.133, green: 0.133, blue: 0.133, alpha: 1)
     
     var animationFinished = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
         
         self.monthLabel.text = CVDate(date: NSDate()).globalDescription
+        
+        self.borderLabel.layer.borderWidth = 1
+        self.borderLabel.layer.borderColor = BORDER_COLOR.CGColor!
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     override func viewDidLayoutSubviews() {
@@ -33,6 +39,10 @@ class ViewController: UIViewController {
         
         self.menuView.commitMenuViewUpdate()
         self.calendarView.commitCalendarViewUpdate()
+    }
+    
+    func printFrame(name: String, frame: CGRect) {
+        println("\(name) x: \(frame.origin.x), y: \(frame.origin.y), width: \(frame.size.width), height: \(frame.size.height)")
     }
 }
 
