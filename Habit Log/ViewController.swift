@@ -37,7 +37,6 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
         self.monthLabel.text = CVDate(date: NSDate()).globalDescription
-        
         self.borderLabel.layer.borderWidth = 1
         self.borderLabel.layer.borderColor = BORDER_COLOR.CGColor!
     }
@@ -50,7 +49,7 @@ class ViewController: UIViewController {
         super.viewDidLayoutSubviews()
         
         self.menuView.commitMenuViewUpdate()
-        self.calendarView.commitCalendarViewUpdate()
+        self.calendarView.commitCalendarViewUpdate()        
     }
     
     func printFrame(name: String, frame: CGRect) {

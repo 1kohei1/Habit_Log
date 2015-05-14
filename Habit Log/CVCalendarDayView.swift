@@ -395,17 +395,22 @@ extension CVCalendarDayView {
         switch type {
         case let .Single:
             shape = .Circle
-            if isCurrentDay {
-                dayLabel?.textColor = appearance.dayLabelPresentWeekdaySelectedTextColor!
-                dayLabel?.font = appearance.dayLabelPresentWeekdaySelectedFont
-                backgroundColor = appearance.dayLabelPresentWeekdaySelectedBackgroundColor
-                backgroundAlpha = appearance.dayLabelPresentWeekdaySelectedBackgroundAlpha
-            } else {
-                dayLabel?.textColor = appearance.dayLabelWeekdaySelectedTextColor
-                dayLabel?.font = appearance.dayLabelWeekdaySelectedFont
-                backgroundColor = appearance.dayLabelWeekdaySelectedBackgroundColor
-                backgroundAlpha = appearance.dayLabelWeekdaySelectedBackgroundAlpha
-            }
+            // Custom edit
+//            if isCurrentDay {
+//                dayLabel?.textColor = appearance.dayLabelPresentWeekdaySelectedTextColor!
+//                dayLabel?.font = appearance.dayLabelPresentWeekdaySelectedFont
+//                backgroundColor = appearance.dayLabelPresentWeekdaySelectedBackgroundColor
+//                backgroundAlpha = appearance.dayLabelPresentWeekdaySelectedBackgroundAlpha
+//            } else {
+//                dayLabel?.textColor = appearance.dayLabelWeekdaySelectedTextColor
+//                dayLabel?.font = appearance.dayLabelWeekdaySelectedFont
+//                backgroundColor = appearance.dayLabelWeekdaySelectedBackgroundColor
+//                backgroundAlpha = appearance.dayLabelWeekdaySelectedBackgroundAlpha
+//            }
+            dayLabel?.textColor = appearance.dayLabelPresentWeekdaySelectedTextColor!
+            dayLabel?.font = appearance.dayLabelPresentWeekdaySelectedFont
+            backgroundColor = appearance.dayLabelPresentWeekdaySelectedBackgroundColor
+            backgroundAlpha = appearance.dayLabelPresentWeekdaySelectedBackgroundAlpha
             
         case let .Range:
             shape = .Rect
