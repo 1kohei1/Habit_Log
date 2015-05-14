@@ -20,6 +20,18 @@ class ViewController: UIViewController {
     let BORDER_COLOR: UIColor = UIColor(red: 0.133, green: 0.133, blue: 0.133, alpha: 1)
     
     var animationFinished = true
+    var logDates = NSArray(array: [
+        CVDate(day: 3, month: 4, week: 2, year: 2015),
+        CVDate(day: 9, month: 4, week: 2, year: 2015),
+        CVDate(day: 19, month: 4, week: 4, year: 2015),
+        CVDate(day: 22, month: 4, week: 4, year: 2015),
+        CVDate(day: 3, month: 5, week: 2, year: 2015),
+        CVDate(day: 6, month: 5, week: 2, year: 2015),
+        CVDate(day: 8, month: 5, week: 2, year: 2015),
+        CVDate(day: 10, month: 5, week: 3, year: 2015),
+        CVDate(day: 12, month: 5, week: 3, year: 2015),
+        CVDate(day: 14, month: 5, week: 3, year: 2015),
+        ])
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,13 +58,15 @@ class ViewController: UIViewController {
     }
 }
 
-extension ViewController: CVCalendarViewDelegate, CVCalendarMenuViewDelegate {
-    func presentationMode() -> CalendarMode {
-        return .MonthView
-    }
-    
+extension ViewController: CVCalendarMenuViewDelegate {
     func firstWeekday() -> Weekday {
         return .Sunday
+    }
+}
+
+extension ViewController: CVCalendarViewDelegate {
+    func presentationMode() -> CalendarMode {
+        return .MonthView
     }
     
     func didSelectDayView(dayView: CVCalendarDayView) {
@@ -98,5 +112,24 @@ extension ViewController: CVCalendarViewDelegate, CVCalendarMenuViewDelegate {
         }
     }
     
-}
+    func supplementaryView(shouldDisplayOnDayView dayView: DayView) -> Bool {
+        if logDates.indexOfObject(dayView.date) == NSNotFound {
+            return false
+        } else {
+            return true
+        }
+    }
 
+    func supplementaryView(viewOnDayView dayView: DayView) -> UIView {
+        // Show logged circle
+        var circle = CVAuxiliaryView(dayView: dayView, rect: dayView.bounds, shape: CVShape.Circle)
+        circle.tag = 10
+        // adjust color later
+        circle.fillColor = UIColor(red: 0.180, green: 0.800, blue: 0.443, alpha: 0.80)
+        
+        dayView.dayLabel!.textColor = UIColor.whiteColor()
+
+        return circle
+    }
+
+}

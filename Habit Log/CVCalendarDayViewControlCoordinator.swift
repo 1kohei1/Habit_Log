@@ -55,7 +55,15 @@ extension CVCalendarDayViewControlCoordinator {
 
 private extension CVCalendarDayViewControlCoordinator {
     func presentSelectionOnDayView(dayView: DayView) {
-        animator.animateSelectionOnDayView(dayView)
+        // Custom edit
+        var today = NSDate()
+        var selectedDate = dayView.date.convertedDate()!
+        
+        if today.laterDate(selectedDate) == selectedDate {
+            // selected day is later than today.
+        } else {
+            animator.animateSelectionOnDayView(dayView)
+        }
         //animator?.animateSelection(dayView, withControlCoordinator: self)
     }
     

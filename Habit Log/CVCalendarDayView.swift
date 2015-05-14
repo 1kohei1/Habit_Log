@@ -50,7 +50,9 @@ class CVCalendarDayView: UIView {
             if oldValue != frame {
                 circleView?.setNeedsDisplay()
                 topMarkerSetup()
-                supplementarySetup()
+                if self.date != nil {
+                    supplementarySetup()
+                }
             }
         }
     }
@@ -173,9 +175,17 @@ extension CVCalendarDayView {
                     font = appearance.dayLabelPresentWeekdayFont
                 }
             }
-            
         } else {
-            color = appearance.dayLabelWeekdayInTextColor
+            // Custom Edit
+            var today = NSDate()
+            var dayViewDate = date.convertedDate()!
+            
+            if today.laterDate(dayViewDate) == dayViewDate {
+                color = appearance.dayLabelWeekdayOutTextColor
+                self.userInteractionEnabled = false
+            } else {
+                color = appearance.dayLabelWeekdayInTextColor
+            }
         }
         
         if color != nil && font != nil {
@@ -423,7 +433,10 @@ extension CVCalendarDayView {
         circleView!.fillColor = backgroundColor
         circleView!.alpha = backgroundAlpha
         circleView!.setNeedsDisplay()
-        insertSubview(circleView!, atIndex: 0)
+        
+        // Custom Edit
+        self.viewWithTag(10)?.hidden = true
+        insertSubview(circleView!, belowSubview: dayLabel)
         
         moveDotMarkerBack(false, coloring: false)
     }
@@ -436,7 +449,16 @@ extension CVCalendarDayView {
             } else if isCurrentDay {
                 color = appearance.dayLabelPresentWeekdayTextColor
             } else {
-                color = appearance.dayLabelWeekdayInTextColor
+                // Custom Edit
+                var today = NSDate()
+                var dayViewDate = date.convertedDate()!
+                
+                if today.laterDate(dayViewDate) == dayViewDate {
+                    color = appearance.dayLabelWeekdayOutTextColor
+                    self.userInteractionEnabled = false
+                } else {
+                    color = appearance.dayLabelWeekdayInTextColor
+                }
             }
             
             var font: UIFont?
@@ -450,12 +472,19 @@ extension CVCalendarDayView {
                 font = appearance.dayLabelWeekdayFont
             }
             
+            // Custom edit
+            if var circleView = self.viewWithTag(10) {
+                self.viewWithTag(10)?.hidden = false
+                color = UIColor.whiteColor()
+            }
+            
             dayLabel?.textColor = color
             dayLabel?.font = font
             
             moveDotMarkerBack(true, coloring: false)
             
             if clearing {
+                println("\(self.date.commonDescription) is deselected.")
                 circleView?.removeFromSuperview()
             }
         }

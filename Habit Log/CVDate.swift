@@ -74,6 +74,22 @@ extension CVDate {
     }
 }
 
+// Custom Edit
+extension CVDate {
+    
+    override func isEqual(object: AnyObject?) -> Bool {
+        if let date = object as? CVDate {
+            if self.year == date.year && self.month == date.month && self.day == date.day {
+                return true
+            } else {
+                return false
+            }
+        } else {
+            return false
+        }
+    }
+}
+
 private extension CVDate {
     func dateFormattedStringWithFormat(format: String, fromDate date: NSDate) -> String {
         let formatter = NSDateFormatter()
