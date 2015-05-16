@@ -14,12 +14,19 @@ class ViewController: UIViewController {
     @IBOutlet weak var monthLabel: UILabel!
     @IBOutlet weak var menuView: CVCalendarMenuView!
     @IBOutlet weak var calendarView: CVCalendarView!
+    
     @IBOutlet weak var habitTitle: UILabel!
     @IBOutlet weak var borderLabel: UILabel!
+    @IBOutlet weak var settingButton: UIButton!
+    @IBOutlet weak var deleteButton: UIButton!
     
-    let BORDER_COLOR: UIColor = UIColor(red: 0.133, green: 0.133, blue: 0.133, alpha: 1)
-    
+    let FLAT_GREEN_COLOR: UIColor = UIColor(red: 0.180, green: 0.800, blue: 0.443, alpha: 0.80)
+
+    var settingTableView: UITableView = UITableView()
+    var blackCoverScreen: UIView = UIView()
     var animationFinished = true
+    var isSettingOpen = false
+    
     var logDates = NSArray(array: [
         CVDate(day: 3, month: 4, week: 2, year: 2015),
         CVDate(day: 9, month: 4, week: 2, year: 2015),
@@ -37,8 +44,13 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
         self.monthLabel.text = CVDate(date: NSDate()).globalDescription
-        self.borderLabel.layer.borderWidth = 1
-        self.borderLabel.layer.borderColor = BORDER_COLOR.CGColor!
+        self.deleteButton.hidden = true
+        
+        var border = CALayer()
+        border.backgroundColor = UIColor.blackColor().CGColor
+        border.frame = CGRectMake(0, self.borderLabel.frame.size.height, self.borderLabel.frame.size.width, 2)
+        
+        self.borderLabel.layer.addSublayer(border)
     }
     
     override func didReceiveMemoryWarning() {
@@ -49,12 +61,115 @@ class ViewController: UIViewController {
         super.viewDidLayoutSubviews()
         
         self.menuView.commitMenuViewUpdate()
-        self.calendarView.commitCalendarViewUpdate()        
+        self.calendarView.commitCalendarViewUpdate()
     }
     
-    func printFrame(name: String, frame: CGRect) {
-        println("\(name) x: \(frame.origin.x), y: \(frame.origin.y), width: \(frame.size.width), height: \(frame.size.height)")
+    override func viewDidAppear(animated: Bool) {
+        setUpSettingTableView()
+}
+    
+    
+    func setUpSettingTableView() {
+        var borderLabelFrame = self.borderLabel.frame
+        var yOffset = borderLabelFrame.origin.y + borderLabelFrame.size.height + 2 - 200
+        
+        settingTableView = UITableView(frame: CGRectMake(0, yOffset, self.view.frame.size.width, 200), style: UITableViewStyle.Grouped)
+        settingTableView.delegate = self
+        settingTableView.dataSource = self
+        
+        // UILabel to cover status bar
+        var whiteLabel = UILabel(frame: CGRectMake(0, 0, self.view.frame.size.width, 28))
+        whiteLabel.backgroundColor = UIColor.whiteColor()
+        self.view.addSubview(whiteLabel)
+        
+        // UIView for covering calendar
+        blackCoverScreen.frame = self.view.frame
+        blackCoverScreen.backgroundColor = UIColor.blackColor()
+        blackCoverScreen.alpha = 0.0
+        blackCoverScreen.userInteractionEnabled = false
+        blackCoverScreen.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "settingPushed:"))
+        
+        self.view.bringSubviewToFront(self.habitTitle)
+        self.view.bringSubviewToFront(self.borderLabel)
+        self.view.bringSubviewToFront(whiteLabel)
+        self.view.bringSubviewToFront(self.settingButton)
+        self.view.bringSubviewToFront(self.deleteButton)
+        
+        self.view.insertSubview(settingTableView, belowSubview: self.habitTitle)
+        self.view.insertSubview(blackCoverScreen, belowSubview: settingTableView)
     }
+    
+    @IBAction func settingPushed(sender: AnyObject) {
+        self.blackCoverScreen.userInteractionEnabled = false
+        self.deleteButton.userInteractionEnabled = false
+        self.settingButton.userInteractionEnabled = false
+        
+        var borderLabelFrame = self.borderLabel.frame
+        var yOffset: CGFloat = self.isSettingOpen ? -198.0 : -10.0
+
+        UIView.animateWithDuration(3.0, delay: 0, options: UIViewAnimationOptions.CurveEaseIn, animations: {
+            
+            self.settingTableView.frame.origin.y = borderLabelFrame.origin.y + borderLabelFrame.size.height + yOffset
+            self.blackCoverScreen.alpha = self.isSettingOpen ? 0.0 : 0.45
+            
+            }, completion: {(val: Bool) -> Void in
+                
+                if self.isSettingOpen {
+                    self.settingButton.setImage(UIImage(named: "setting2.png"), forState: UIControlState.Normal)
+                    self.settingButton.tintColor = UIColor.blackColor()
+                    self.deleteButton.hidden = true
+                } else {
+                    self.settingButton.setImage(UIImage(named: "save.png"), forState: UIControlState.Normal)
+                    self.settingButton.tintColor = self.FLAT_GREEN_COLOR
+                    self.deleteButton.hidden = false
+                    self.blackCoverScreen.userInteractionEnabled = true
+                }
+                
+                self.settingButton.userInteractionEnabled = true
+                self.deleteButton.userInteractionEnabled = true
+                self.isSettingOpen = !self.isSettingOpen
+        })
+    }
+    
+    @IBAction func deletePushed(sender: AnyObject) {
+
+    }
+    
+    func blackCoverScreenPushed(sender: UITapGestureRecognizer) {
+        
+    }
+    
+}
+
+extension ViewController: UITableViewDataSource, UITableViewDelegate {
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 2
+    }
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 1
+    }
+    
+    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if section == 0 {
+            return "Habit Title"
+        } else {
+            return "SECRET"
+        }
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        
+        var cell = tableView.dequeueReusableCellWithIdentifier("Cell") as? UITableViewCell
+        if cell == nil {
+            cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "Cell")
+        }
+        
+        cell?.selectionStyle = UITableViewCellSelectionStyle.None
+        
+        return cell!
+    }
+
 }
 
 extension ViewController: CVCalendarMenuViewDelegate {
@@ -124,11 +239,17 @@ extension ViewController: CVCalendarViewDelegate {
         var circle = CVAuxiliaryView(dayView: dayView, rect: dayView.bounds, shape: CVShape.Circle)
         circle.tag = 10
         // adjust color later
-        circle.fillColor = UIColor(red: 0.180, green: 0.800, blue: 0.443, alpha: 0.80)
+        circle.fillColor = FLAT_GREEN_COLOR
         
         dayView.dayLabel!.textColor = UIColor.whiteColor()
 
         return circle
     }
 
+}
+
+extension ViewController {
+    func printFrame(name: String, frame: CGRect) {
+        println("\(name) x: \(frame.origin.x), y: \(frame.origin.y), width: \(frame.size.width), height: \(frame.size.height)")
+    }
 }

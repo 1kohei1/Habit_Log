@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14C1510" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="vXZ-lx-hvc">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -16,8 +17,39 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Auq-1G-0SY" customClass="CVCalendarMenuView" customModule="Habit_Log" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="98" width="600" height="30"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Habit Title" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wiN-uA-dcg">
+                                <rect key="frame" x="0.0" y="28" width="600" height="37"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="27"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="May, 2015" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l5P-34-OrB">
+                                <rect key="frame" x="259" y="91" width="83" height="25"/>
+                                <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="18"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2gi-jO-7Js">
+                                <rect key="frame" x="552" y="30" width="32" height="32"/>
+                                <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                <state key="normal" image="setting2.png">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="settingPushed:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="0lN-T1-fXz"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S9p-im-hIR">
+                                <rect key="frame" x="16" y="30" width="32" height="32"/>
+                                <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                <state key="normal" image="delete.png"/>
+                                <connections>
+                                    <action selector="deletePushed:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="jap-iv-XJg"/>
+                                </connections>
+                            </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Auq-1G-0SY" customClass="CVCalendarMenuView" customModule="Habit_Log" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="124" width="600" height="30"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="Pfg-KU-fx0"/>
@@ -26,8 +58,18 @@
                                     <outlet property="menuViewDelegate" destination="vXZ-lx-hvc" id="vSe-RP-K3G"/>
                                 </connections>
                             </view>
-                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Di9-BH-HSB" customClass="CVCalendarView" customModule="Habit_Log" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="129" width="600" height="360"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zih-I7-4b1">
+                                <rect key="frame" x="0.0" y="65" width="600" height="8"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="8" id="mIl-Wl-IBz"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Di9-BH-HSB" customClass="CVCalendarView" customModule="Habit_Log" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="155" width="600" height="360"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="360" id="Kno-09-6L5"/>
@@ -42,56 +84,74 @@
                                     <outlet property="calendarDelegate" destination="vXZ-lx-hvc" id="HkI-l1-MYv"/>
                                 </connections>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Habit Title" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wiN-uA-dcg">
-                                <rect key="frame" x="0.0" y="28" width="600" height="33"/>
-                                <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="27"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WpA-qE-hpF">
-                                <rect key="frame" x="0.0" y="69" width="600" height="1"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="1" id="DDb-qh-zTY"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="May, 2015" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l5P-34-OrB">
-                                <rect key="frame" x="259" y="81" width="83" height="25"/>
-                                <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="18"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="WpA-qE-hpF" firstAttribute="top" secondItem="wiN-uA-dcg" secondAttribute="bottom" constant="8" id="1JT-QP-cOO"/>
-                            <constraint firstItem="WpA-qE-hpF" firstAttribute="leading" secondItem="wiN-uA-dcg" secondAttribute="leading" id="3Ra-xQ-eb2"/>
-                            <constraint firstItem="l5P-34-OrB" firstAttribute="top" secondItem="WpA-qE-hpF" secondAttribute="bottom" constant="11" id="6B8-Ws-M9D"/>
-                            <constraint firstItem="Di9-BH-HSB" firstAttribute="leading" secondItem="Auq-1G-0SY" secondAttribute="leading" id="F58-ag-7ER"/>
-                            <constraint firstItem="WpA-qE-hpF" firstAttribute="trailing" secondItem="wiN-uA-dcg" secondAttribute="trailing" id="HhW-5r-3L6"/>
+                            <constraint firstItem="wiN-uA-dcg" firstAttribute="centerY" secondItem="S9p-im-hIR" secondAttribute="centerY" id="2FW-ag-0yZ"/>
+                            <constraint firstAttribute="centerX" secondItem="zih-I7-4b1" secondAttribute="centerX" id="3Yz-PG-bpt"/>
+                            <constraint firstItem="S9p-im-hIR" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="10" id="9Vg-gK-f7g"/>
+                            <constraint firstItem="wiN-uA-dcg" firstAttribute="centerY" secondItem="2gi-jO-7Js" secondAttribute="centerY" id="B8o-l1-rsX"/>
+                            <constraint firstItem="2gi-jO-7Js" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="10" id="DW8-wT-gbR"/>
+                            <constraint firstAttribute="centerX" secondItem="Di9-BH-HSB" secondAttribute="centerX" id="JSJ-Rv-1XG"/>
                             <constraint firstItem="wiN-uA-dcg" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="8" id="K3X-zc-XBB"/>
-                            <constraint firstAttribute="width" secondItem="WpA-qE-hpF" secondAttribute="width" id="NdJ-GX-q0p"/>
-                            <constraint firstItem="Di9-BH-HSB" firstAttribute="trailing" secondItem="Auq-1G-0SY" secondAttribute="trailing" id="WSv-nM-PVt"/>
-                            <constraint firstAttribute="width" secondItem="Auq-1G-0SY" secondAttribute="width" id="WVC-GU-hab"/>
-                            <constraint firstItem="Auq-1G-0SY" firstAttribute="top" secondItem="l5P-34-OrB" secondAttribute="bottom" constant="8" id="jUV-Er-Lec"/>
+                            <constraint firstItem="2gi-jO-7Js" firstAttribute="trailing" secondItem="kh9-bI-dsS" secondAttribute="trailingMargin" id="KNY-gW-jGV"/>
+                            <constraint firstItem="wiN-uA-dcg" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="8" id="LSJ-Ty-TNb"/>
+                            <constraint firstItem="2gi-jO-7Js" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="10" id="MPl-DK-jKa"/>
+                            <constraint firstItem="Auq-1G-0SY" firstAttribute="width" secondItem="kh9-bI-dsS" secondAttribute="width" id="UU0-5p-76X"/>
+                            <constraint firstItem="l5P-34-OrB" firstAttribute="top" secondItem="wiN-uA-dcg" secondAttribute="bottom" constant="8" id="WNO-5o-EXf"/>
+                            <constraint firstItem="zih-I7-4b1" firstAttribute="width" secondItem="kh9-bI-dsS" secondAttribute="width" id="acd-uO-WFI"/>
+                            <constraint firstItem="Di9-BH-HSB" firstAttribute="top" secondItem="Auq-1G-0SY" secondAttribute="bottom" constant="1" id="c0W-yX-HB9"/>
+                            <constraint firstItem="wiN-uA-dcg" firstAttribute="centerY" secondItem="S9p-im-hIR" secondAttribute="centerY" id="cbG-VW-my5"/>
+                            <constraint firstItem="Auq-1G-0SY" firstAttribute="top" secondItem="l5P-34-OrB" secondAttribute="bottom" constant="8" id="fUN-j8-OF0"/>
+                            <constraint firstItem="S9p-im-hIR" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" id="gtP-ks-VwP"/>
+                            <constraint firstItem="2gi-jO-7Js" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="536" id="iDN-yA-bBN"/>
+                            <constraint firstAttribute="width" secondItem="wiN-uA-dcg" secondAttribute="width" id="ifU-Kg-4v6"/>
+                            <constraint firstItem="zih-I7-4b1" firstAttribute="top" secondItem="wiN-uA-dcg" secondAttribute="bottom" id="jTV-4s-TJH"/>
                             <constraint firstAttribute="centerX" secondItem="l5P-34-OrB" secondAttribute="centerX" id="jbQ-bV-PDy"/>
+                            <constraint firstAttribute="centerX" secondItem="wiN-uA-dcg" secondAttribute="centerX" id="jf4-0n-VNg"/>
                             <constraint firstAttribute="width" secondItem="wiN-uA-dcg" secondAttribute="width" id="kfD-gE-zRV"/>
-                            <constraint firstItem="Di9-BH-HSB" firstAttribute="top" secondItem="Auq-1G-0SY" secondAttribute="bottom" constant="1" id="mF9-Wa-7tG"/>
+                            <constraint firstAttribute="centerX" secondItem="Auq-1G-0SY" secondAttribute="centerX" id="m4r-Vn-b6c"/>
+                            <constraint firstItem="S9p-im-hIR" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="10" id="oo0-Om-jMN"/>
+                            <constraint firstItem="wiN-uA-dcg" firstAttribute="leading" secondItem="S9p-im-hIR" secondAttribute="trailing" id="qSH-aY-MRZ"/>
+                            <constraint firstItem="2gi-jO-7Js" firstAttribute="leading" secondItem="wiN-uA-dcg" secondAttribute="trailing" id="sYu-xZ-IjY"/>
                             <constraint firstItem="Di9-BH-HSB" firstAttribute="width" secondItem="kh9-bI-dsS" secondAttribute="width" id="tG1-an-AJb"/>
+                            <constraint firstItem="Di9-BH-HSB" firstAttribute="width" secondItem="kh9-bI-dsS" secondAttribute="width" id="vp7-1e-Cxe"/>
+                            <constraint firstItem="l5P-34-OrB" firstAttribute="top" secondItem="wiN-uA-dcg" secondAttribute="bottom" constant="8" id="x6N-E7-JVK"/>
+                            <constraint firstItem="wiN-uA-dcg" firstAttribute="centerY" secondItem="2gi-jO-7Js" secondAttribute="centerY" id="zEM-ON-GIZ"/>
+                            <constraint firstItem="l5P-34-OrB" firstAttribute="top" secondItem="zih-I7-4b1" secondAttribute="bottom" constant="18" id="zzb-zk-QVO"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="K3X-zc-XBB"/>
+                                <exclude reference="cbG-VW-my5"/>
+                                <exclude reference="kfD-gE-zRV"/>
+                                <exclude reference="qSH-aY-MRZ"/>
+                                <exclude reference="zEM-ON-GIZ"/>
+                                <exclude reference="oo0-Om-jMN"/>
+                                <exclude reference="WNO-5o-EXf"/>
+                                <exclude reference="x6N-E7-JVK"/>
+                                <exclude reference="DW8-wT-gbR"/>
+                                <exclude reference="iDN-yA-bBN"/>
+                                <exclude reference="sYu-xZ-IjY"/>
+                            </mask>
+                        </variation>
                     </view>
                     <connections>
-                        <outlet property="borderLabel" destination="WpA-qE-hpF" id="hRL-s3-kWX"/>
+                        <outlet property="borderLabel" destination="zih-I7-4b1" id="WaF-ob-K0h"/>
                         <outlet property="calendarView" destination="Di9-BH-HSB" id="2B9-wo-Dpw"/>
+                        <outlet property="deleteButton" destination="S9p-im-hIR" id="gUq-eN-TQ9"/>
                         <outlet property="habitTitle" destination="wiN-uA-dcg" id="0f7-j6-SpP"/>
                         <outlet property="menuView" destination="Auq-1G-0SY" id="3ck-6h-sLF"/>
                         <outlet property="monthLabel" destination="l5P-34-OrB" id="MWr-1A-NNZ"/>
+                        <outlet property="settingButton" destination="2gi-jO-7Js" id="1GH-zL-YWe"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
         </scene>
     </scenes>
+    <resources>
+        <image name="delete.png" width="32" height="32"/>
+        <image name="setting2.png" width="32" height="32"/>
+    </resources>
 </document>

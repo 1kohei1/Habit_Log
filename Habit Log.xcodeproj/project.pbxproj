@@ -7,7 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1982B28D1B03A674007BD023 /* check52.png in Resources */ = {isa = PBXBuildFile; fileRef = 1982B28C1B03A674007BD023 /* check52.png */; };
+		190BECB61B05595600A8ECDA /* setting2.png in Resources */ = {isa = PBXBuildFile; fileRef = 190BECB41B05595600A8ECDA /* setting2.png */; };
+		190BECBD1B0578B200A8ECDA /* delete.png in Resources */ = {isa = PBXBuildFile; fileRef = 190BECBC1B0578B200A8ECDA /* delete.png */; };
+		190BECBF1B06CE8300A8ECDA /* save.png in Resources */ = {isa = PBXBuildFile; fileRef = 190BECBE1B06CE8300A8ECDA /* save.png */; };
 		1982B2911B03E988007BD023 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1982B2901B03E988007BD023 /* QuartzCore.framework */; };
 		199692C21B02A30600275F4D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199692C11B02A30600275F4D /* AppDelegate.swift */; };
 		199692C51B02A30600275F4D /* Habit_Log.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 199692C31B02A30600275F4D /* Habit_Log.xcdatamodeld */; };
@@ -56,7 +58,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		1982B28C1B03A674007BD023 /* check52.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = check52.png; sourceTree = "<group>"; };
+		190BECB41B05595600A8ECDA /* setting2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = setting2.png; sourceTree = "<group>"; };
+		190BECBC1B0578B200A8ECDA /* delete.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = delete.png; sourceTree = "<group>"; };
+		190BECBE1B06CE8300A8ECDA /* save.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = save.png; sourceTree = "<group>"; };
 		1982B2901B03E988007BD023 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		199692BC1B02A30600275F4D /* Habit Log.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Habit Log.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		199692C01B02A30600275F4D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -142,7 +146,9 @@
 				199692C11B02A30600275F4D /* AppDelegate.swift */,
 				199692C61B02A30600275F4D /* ViewController.swift */,
 				199692C81B02A30600275F4D /* Main.storyboard */,
-				1982B28C1B03A674007BD023 /* check52.png */,
+				190BECBC1B0578B200A8ECDA /* delete.png */,
+				190BECB41B05595600A8ECDA /* setting2.png */,
+				190BECBE1B06CE8300A8ECDA /* save.png */,
 				199692CB1B02A30600275F4D /* Images.xcassets */,
 				199692CD1B02A30600275F4D /* LaunchScreen.xib */,
 				199692C31B02A30600275F4D /* Habit_Log.xcdatamodeld */,
@@ -284,8 +290,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				199692CA1B02A30600275F4D /* Main.storyboard in Resources */,
+				190BECB61B05595600A8ECDA /* setting2.png in Resources */,
+				190BECBF1B06CE8300A8ECDA /* save.png in Resources */,
 				199692CF1B02A30600275F4D /* LaunchScreen.xib in Resources */,
-				1982B28D1B03A674007BD023 /* check52.png in Resources */,
+				190BECBD1B0578B200A8ECDA /* delete.png in Resources */,
 				199692CC1B02A30600275F4D /* Images.xcassets in Resources */,
 				199693191B02A78000275F4D /* Habit_Log_screenshot_1.png in Resources */,
 			);
