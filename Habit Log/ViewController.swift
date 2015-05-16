@@ -66,14 +66,13 @@ class ViewController: UIViewController {
     
     override func viewDidAppear(animated: Bool) {
         setUpSettingTableView()
-}
-    
+    }
     
     func setUpSettingTableView() {
         var borderLabelFrame = self.borderLabel.frame
-        var yOffset = borderLabelFrame.origin.y + borderLabelFrame.size.height + 2 - 200
+        var yOffset = borderLabelFrame.origin.y + borderLabelFrame.size.height + 2 - 244
         
-        settingTableView = UITableView(frame: CGRectMake(0, yOffset, self.view.frame.size.width, 200), style: UITableViewStyle.Grouped)
+        settingTableView = UITableView(frame: CGRectMake(0, yOffset, self.view.frame.size.width, 244), style: UITableViewStyle.Grouped)
         settingTableView.delegate = self
         settingTableView.dataSource = self
         
@@ -105,49 +104,63 @@ class ViewController: UIViewController {
         self.settingButton.userInteractionEnabled = false
         
         var borderLabelFrame = self.borderLabel.frame
-        var yOffset: CGFloat = self.isSettingOpen ? -198.0 : -10.0
+        var yOffset: CGFloat = self.isSettingOpen ? -242.0 : -10.0
 
-        UIView.animateWithDuration(3.0, delay: 0, options: UIViewAnimationOptions.CurveEaseIn, animations: {
+        UIView.animateWithDuration(0.45, delay: 0, options: UIViewAnimationOptions.CurveEaseIn, animations: {
             
             self.settingTableView.frame.origin.y = borderLabelFrame.origin.y + borderLabelFrame.size.height + yOffset
             self.blackCoverScreen.alpha = self.isSettingOpen ? 0.0 : 0.45
             
             }, completion: {(val: Bool) -> Void in
-                
                 if self.isSettingOpen {
                     self.settingButton.setImage(UIImage(named: "setting2.png"), forState: UIControlState.Normal)
                     self.settingButton.tintColor = UIColor.blackColor()
                     self.deleteButton.hidden = true
+                    
+                    self.view.endEditing(true)
+                    self.settingTableView.userInteractionEnabled = false
+                    self.isSettingOpen = false
                 } else {
                     self.settingButton.setImage(UIImage(named: "save.png"), forState: UIControlState.Normal)
                     self.settingButton.tintColor = self.FLAT_GREEN_COLOR
                     self.deleteButton.hidden = false
                     self.blackCoverScreen.userInteractionEnabled = true
+                    
+                    self.settingTableView.userInteractionEnabled = true
+                    self.isSettingOpen = true
                 }
                 
                 self.settingButton.userInteractionEnabled = true
                 self.deleteButton.userInteractionEnabled = true
-                self.isSettingOpen = !self.isSettingOpen
         })
+        
+        // Change the font for settingTableView header
+        var titleLabel = settingTableView.headerViewForSection(0)
+        if titleLabel != nil {
+            titleLabel!.textLabel.font = UIFont(name: "Avenir-Medium", size: 13)
+        }
+        titleLabel = settingTableView.headerViewForSection(1)
+        if titleLabel != nil {
+            titleLabel!.textLabel.font = UIFont(name: "Avenir-Medium", size: 13)
+        }
     }
     
     @IBAction func deletePushed(sender: AnyObject) {
 
     }
-    
-    func blackCoverScreenPushed(sender: UITapGestureRecognizer) {
-        
-    }
-    
 }
 
-extension ViewController: UITableViewDataSource, UITableViewDelegate {
+extension ViewController: UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate {
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 2
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        if section == 0 {
+            return 1
+        } else {
+            return 2
+        }
     }
     
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -159,17 +172,95 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        var cell: UITableViewCell?
+        if indexPath.section == 0 {
+            cell = tableView.dequeueReusableCellWithIdentifier("Cell1") as? UITableViewCell
+        } else {
+            if indexPath.row == 0 {
+                cell = tableView.dequeueReusableCellWithIdentifier("Cell2") as? UITableViewCell
+            } else {
+                cell = tableView.dequeueReusableCellWithIdentifier("Cell3") as? UITableViewCell
+            }
+        }
         
-        var cell = tableView.dequeueReusableCellWithIdentifier("Cell") as? UITableViewCell
         if cell == nil {
-            cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "Cell")
+            if indexPath.section == 0 {
+                cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "Cell2")
+                
+                var textField = UITextField(frame: CGRectMake(0, 0, self.view.frame.size.width, cell!.frame.size.height))
+                textField.tag = 9
+                textField.text = "Habit Title" // Change here later
+                textField.placeholder = "Enter Title"
+                textField.font = UIFont(name: "Avenir", size: 20)
+                textField.textAlignment = NSTextAlignment.Center
+                textField.borderStyle = UITextBorderStyle.None
+                textField.returnKeyType = UIReturnKeyType.Done
+                textField.delegate = self
+                
+                cell?.addSubview(textField)
+            } else {
+                var titleLabel = UILabel(frame: CGRectMake(16, 0, self.view.frame.size.width / 2, 44))
+                titleLabel.font = UIFont(name: "Avenir", size: 20)
+                titleLabel.tag = 11
+                
+                if indexPath.row == 0 {
+                    cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "Cell2")
+                    
+                    titleLabel.text = "Secret"
+                    cell!.addSubview(titleLabel)
+                    
+                    var secretSwitch = UISwitch(frame: CGRectMake(self.view.frame.size.width - 16 - 51, 6.5, 51, 31))
+                    secretSwitch.tag = 10
+                    secretSwitch.setOn(false, animated: false) // Change here later
+                    secretSwitch.addTarget(self, action: "secretSwitchChanged:", forControlEvents: UIControlEvents.ValueChanged)
+                    cell!.addSubview(secretSwitch)
+                } else {
+                    cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "Cell3")
+                    
+                    titleLabel.text = "Password"
+                    titleLabel.alpha = 0.2 // Change here later
+                    cell!.addSubview(titleLabel)
+                    
+                    var textField = UITextField(frame: CGRectMake(self.view.frame.size.width / 2, 0, self.view.frame.size.width / 2, cell!.frame.size.height))
+                    textField.tag = 12
+                    textField.text = "" // Change here later
+                    textField.placeholder = "Enter Password"
+                    textField.font = UIFont(name: "Avenir", size: 20)
+                    textField.textAlignment = NSTextAlignment.Center
+                    textField.borderStyle = UITextBorderStyle.None
+                    textField.returnKeyType = UIReturnKeyType.Done
+                    textField.userInteractionEnabled = false
+                    textField.delegate = self
+                    
+                    cell?.addSubview(textField)
+                }
+            }
         }
         
         cell?.selectionStyle = UITableViewCellSelectionStyle.None
         
         return cell!
     }
-
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return false
+    }
+    
+    func secretSwitchChanged(sender:UISwitch!) {
+        var indexPath = NSIndexPath(forRow: 1, inSection: 1)
+        var cell = settingTableView.cellForRowAtIndexPath(indexPath)
+        
+        if sender.on {
+            cell?.viewWithTag(11)?.alpha = 1
+            cell?.viewWithTag(12)?.alpha = 1
+            cell?.viewWithTag(12)?.userInteractionEnabled = true
+        } else {
+            cell?.viewWithTag(11)?.alpha = 0.2
+            cell?.viewWithTag(12)?.alpha = 0.2
+            cell?.viewWithTag(12)?.userInteractionEnabled = false
+        }
+    }
 }
 
 extension ViewController: CVCalendarMenuViewDelegate {
