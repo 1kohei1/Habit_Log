@@ -12,6 +12,7 @@
 		190BECBF1B06CE8300A8ECDA /* save.png in Resources */ = {isa = PBXBuildFile; fileRef = 190BECBE1B06CE8300A8ECDA /* save.png */; };
 		1982B2911B03E988007BD023 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1982B2901B03E988007BD023 /* QuartzCore.framework */; };
 		19864ADE1B09269F0034AC3E /* CoreDataHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19864ADD1B09269F0034AC3E /* CoreDataHandler.swift */; };
+		19864AE01B0932FB0034AC3E /* HabitImageHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19864ADF1B0932FB0034AC3E /* HabitImageHandler.swift */; };
 		199692C21B02A30600275F4D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199692C11B02A30600275F4D /* AppDelegate.swift */; };
 		199692C51B02A30600275F4D /* Habit_Log.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 199692C31B02A30600275F4D /* Habit_Log.xcdatamodeld */; };
 		199692C71B02A30600275F4D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199692C61B02A30600275F4D /* ViewController.swift */; };
@@ -64,6 +65,7 @@
 		190BECBE1B06CE8300A8ECDA /* save.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = save.png; sourceTree = "<group>"; };
 		1982B2901B03E988007BD023 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		19864ADD1B09269F0034AC3E /* CoreDataHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataHandler.swift; sourceTree = "<group>"; };
+		19864ADF1B0932FB0034AC3E /* HabitImageHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HabitImageHandler.swift; sourceTree = "<group>"; };
 		199692BC1B02A30600275F4D /* Habit Log.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Habit Log.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		199692C01B02A30600275F4D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		199692C11B02A30600275F4D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -148,6 +150,7 @@
 				199692C11B02A30600275F4D /* AppDelegate.swift */,
 				199692C61B02A30600275F4D /* ViewController.swift */,
 				19864ADD1B09269F0034AC3E /* CoreDataHandler.swift */,
+				19864ADF1B0932FB0034AC3E /* HabitImageHandler.swift */,
 				199692C81B02A30600275F4D /* Main.storyboard */,
 				190BECBC1B0578B200A8ECDA /* delete.png */,
 				190BECB41B05595600A8ECDA /* setting2.png */,
@@ -344,6 +347,7 @@
 				199693131B02A32700275F4D /* CVRange.swift in Sources */,
 				199692C51B02A30600275F4D /* Habit_Log.xcdatamodeld in Sources */,
 				199693171B02A32700275F4D /* CVShape.swift in Sources */,
+				19864AE01B0932FB0034AC3E /* HabitImageHandler.swift in Sources */,
 				1996930E1B02A32700275F4D /* CVCalendarViewPresentationMode.swift in Sources */,
 				199693091B02A32700275F4D /* CVCalendarViewAnimator.swift in Sources */,
 			);
