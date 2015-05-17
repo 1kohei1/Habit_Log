@@ -28,6 +28,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationDidEnterBackground(application: UIApplication) {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+        
+        // Save change
+        println("applicationDidEnterBackground")
+        saveManagedObjectContext()
     }
 
     func applicationWillEnterForeground(application: UIApplication) {
@@ -41,7 +45,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
         // Saves changes in the application's managed object context before the application terminates.
-        self.saveContext()
+//        self.saveContext()
+        
+        // Save change
+        println("applicationWillTerminate")
+        saveManagedObjectContext()
     }
 
     // MARK: - Core Data stack
@@ -65,7 +73,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let url = self.applicationDocumentsDirectory.URLByAppendingPathComponent("Habit_Log.sqlite")
         var error: NSError? = nil
         var failureReason = "There was an error creating or loading the application's saved data."
-        if coordinator!.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: url, options: nil, error: &error) == nil {
+        
+        var options = [
+            NSMigratePersistentStoresAutomaticallyOption: true,
+            NSInferMappingModelAutomaticallyOption: true
+        ]
+        
+        if coordinator!.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: url, options: options, error: &error) == nil {
             coordinator = nil
             // Report any error we got.
             var dict = [String: AnyObject]()
@@ -76,7 +90,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             // Replace this with code to handle the error appropriately.
             // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
             NSLog("Unresolved error \(error), \(error!.userInfo)")
-            abort()
+            // Learn how to handle it
+            // abort()
         }
         
         return coordinator
@@ -106,6 +121,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
     }
-
+    
+    func saveManagedObjectContext() {
+        var error: NSError?
+        if let managedContext = self.managedObjectContext {
+            println(managedContext.hasChanges)
+            if !managedContext.save(&error) {
+                NSLog("Could not save changes")
+                NSLog("Could not save \(error), \(error?.userInfo)")
+            }
+        }
+    }
 }
 
