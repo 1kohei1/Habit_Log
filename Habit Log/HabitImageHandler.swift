@@ -15,6 +15,9 @@ protocol HabitImageHandlerDelegate {
 
 class HabitImageHandler {
 //    var delegate
+    
+    let IMAGE_SIZE = 150
+    
     init() {
         
     }
