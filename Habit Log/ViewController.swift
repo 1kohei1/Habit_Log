@@ -27,6 +27,8 @@ class ViewController: UIViewController {
     var animationFinished = true
     var isSettingOpen = false
     
+    var selectedDayView: CVCalendarDayView?
+    
     var logDates = NSArray(array: [
         CVDate(day: 3, month: 4, week: 2, year: 2015),
         CVDate(day: 9, month: 4, week: 2, year: 2015),
@@ -62,6 +64,8 @@ class ViewController: UIViewController {
         
         self.menuView.commitMenuViewUpdate()
         self.calendarView.commitCalendarViewUpdate()
+        
+        var end = NSDate()
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -146,7 +150,8 @@ class ViewController: UIViewController {
     }
     
     @IBAction func deletePushed(sender: AnyObject) {
-
+        println(selectedDayView)
+        self.supplementaryView(shouldDisplayOnDayView: selectedDayView!)
     }
 }
 
@@ -165,7 +170,7 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate, UITextFiel
     
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         if section == 0 {
-            return "Habit Title"
+            return "HABIT TITLE"
         } else {
             return "SECRET"
         }
@@ -276,6 +281,7 @@ extension ViewController: CVCalendarViewDelegate {
     
     func didSelectDayView(dayView: CVCalendarDayView) {
         let date = dayView.date
+        selectedDayView = dayView
         println("\(calendarView.presentedDate.commonDescription) is selected!")
     }
     
@@ -336,7 +342,6 @@ extension ViewController: CVCalendarViewDelegate {
 
         return circle
     }
-
 }
 
 extension ViewController {
