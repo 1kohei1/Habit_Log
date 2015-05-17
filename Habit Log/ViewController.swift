@@ -9,7 +9,7 @@
 import UIKit
 import QuartzCore
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, CoreDataHandlerDelegate {
 
     @IBOutlet weak var monthLabel: UILabel!
     @IBOutlet weak var menuView: CVCalendarMenuView!
@@ -27,6 +27,8 @@ class ViewController: UIViewController {
     var animationFinished = true
     var isSettingOpen = false
     
+    var coreDataHandler: CoreDataHandler?
+    var selected_habit_index: Int = -1
     var selectedDayView: CVCalendarDayView?
     
     var logDates = NSArray(array: [
@@ -44,6 +46,11 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // Not sure if this is the right place to initiate coreDataHandler
+        self.coreDataHandler = CoreDataHandler(delegate: self)
+        selected_habit_index = self.coreDataHandler!.getSelectedHabitIndex()
+        self.habitTitle.text = self.coreDataHandler!.getSelectedHabitInfo(selected_habit_index).valueForKey("title") as? String
         
         self.monthLabel.text = CVDate(date: NSDate()).globalDescription
         self.deleteButton.hidden = true
@@ -70,6 +77,7 @@ class ViewController: UIViewController {
     
     override func viewDidAppear(animated: Bool) {
         setUpSettingTableView()
+        reflectHabitChange()
     }
     
     func setUpSettingTableView() {
@@ -100,6 +108,8 @@ class ViewController: UIViewController {
         
         self.view.insertSubview(settingTableView, belowSubview: self.habitTitle)
         self.view.insertSubview(blackCoverScreen, belowSubview: settingTableView)
+        
+        settingTableView.reloadData()
     }
     
     @IBAction func settingPushed(sender: AnyObject) {
@@ -124,6 +134,10 @@ class ViewController: UIViewController {
                     self.view.endEditing(true)
                     self.settingTableView.userInteractionEnabled = false
                     self.isSettingOpen = false
+                    
+                    if let btn = sender as? UIButton {
+                        self.saveChange()
+                    }
                 } else {
                     self.settingButton.setImage(UIImage(named: "save.png"), forState: UIControlState.Normal)
                     self.settingButton.tintColor = self.FLAT_GREEN_COLOR
@@ -150,8 +164,63 @@ class ViewController: UIViewController {
     }
     
     @IBAction func deletePushed(sender: AnyObject) {
-        println(selectedDayView)
-        self.supplementaryView(shouldDisplayOnDayView: selectedDayView!)
+//        println(selectedDayView)
+//        self.supplementaryView(shouldDisplayOnDayView: selectedDayView!)
+
+        self.coreDataHandler!.deleteHabit(selected_habit_index)
+        selected_habit_index = self.coreDataHandler!.getSelectedHabitIndex()
+        self.coreDataHandler!.updateHabit(selected_habit_index, info: NSDictionary(object: true, forKey: "isSelected"))
+        
+        self.settingPushed(1)
+        reflectHabitChange()
+        self.calendarView.commitCalendarViewUpdate()
+    }
+    
+    func reflectHabitChange() {
+        var info = self.coreDataHandler!.getSelectedHabitInfo(selected_habit_index)
+        
+        // Habit title update
+        self.habitTitle.text = info.valueForKey("title") as? String
+        
+        // SetingTableView update
+        var cell: UITableViewCell?
+        cell = settingTableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0))
+        var titleTextField = cell!.viewWithTag(9) as! UITextField
+        titleTextField.text = info.valueForKey("title") as? String
+        
+        cell = settingTableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 1))
+        var secretSwitch = cell!.viewWithTag(10) as! UISwitch
+        secretSwitch.setOn(info.valueForKey("isSecret") as! Bool, animated: false)
+        
+        cell = settingTableView.cellForRowAtIndexPath(NSIndexPath(forRow: 1, inSection: 1))
+        var passwordTextField = cell!.viewWithTag(12) as! UITextField
+        passwordTextField.text = info.valueForKey("password") as? String
+    }
+    
+    func saveChange() {
+        var cell: UITableViewCell?
+        cell = settingTableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0))
+        var titleTextField = cell!.viewWithTag(9) as! UITextField
+        
+        cell = settingTableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 1))
+        var secretSwitch = cell!.viewWithTag(10) as! UISwitch
+        
+        cell = settingTableView.cellForRowAtIndexPath(NSIndexPath(forRow: 1, inSection: 1))
+        var passwordTextField = cell!.viewWithTag(12) as! UITextField
+        
+        var keys = ["title", "isSecret", "password"]
+        var values = [titleTextField.text, secretSwitch.on, passwordTextField.text]
+        
+        self.coreDataHandler!.updateHabit(selected_habit_index, info: NSDictionary(objects: values as [AnyObject], forKeys: keys))
+        self.habitTitle.text = titleTextField.text
+    }
+    
+    func failedToFetchData(error: NSError) {
+        
+    }
+    
+    func cannotFindSelectedIndex() {
+        
     }
 }
 
@@ -194,7 +263,6 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate, UITextFiel
                 
                 var textField = UITextField(frame: CGRectMake(0, 0, self.view.frame.size.width, cell!.frame.size.height))
                 textField.tag = 9
-                textField.text = "Habit Title" // Change here later
                 textField.placeholder = "Enter Title"
                 textField.font = UIFont(name: "Avenir", size: 20)
                 textField.textAlignment = NSTextAlignment.Center
@@ -216,20 +284,19 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate, UITextFiel
                     
                     var secretSwitch = UISwitch(frame: CGRectMake(self.view.frame.size.width - 16 - 51, 6.5, 51, 31))
                     secretSwitch.tag = 10
-                    secretSwitch.setOn(false, animated: false) // Change here later
                     secretSwitch.addTarget(self, action: "secretSwitchChanged:", forControlEvents: UIControlEvents.ValueChanged)
                     cell!.addSubview(secretSwitch)
                 } else {
                     cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "Cell3")
                     
                     titleLabel.text = "Password"
-                    titleLabel.alpha = 0.2 // Change here later
+                    titleLabel.alpha = 0.2
                     cell!.addSubview(titleLabel)
                     
                     var textField = UITextField(frame: CGRectMake(self.view.frame.size.width / 2, 0, self.view.frame.size.width / 2, cell!.frame.size.height))
                     textField.tag = 12
-                    textField.text = "" // Change here later
                     textField.placeholder = "Enter Password"
+                    textField.secureTextEntry = true
                     textField.font = UIFont(name: "Avenir", size: 20)
                     textField.textAlignment = NSTextAlignment.Center
                     textField.borderStyle = UITextBorderStyle.None
@@ -241,7 +308,7 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate, UITextFiel
                 }
             }
         }
-        
+
         cell?.selectionStyle = UITableViewCellSelectionStyle.None
         
         return cell!

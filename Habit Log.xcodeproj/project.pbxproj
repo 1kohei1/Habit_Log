@@ -66,6 +66,7 @@
 		1982B2901B03E988007BD023 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		19864ADD1B09269F0034AC3E /* CoreDataHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataHandler.swift; sourceTree = "<group>"; };
 		19864ADF1B0932FB0034AC3E /* HabitImageHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HabitImageHandler.swift; sourceTree = "<group>"; };
+		19864AE11B0943C50034AC3E /* Habit_Log 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Habit_Log 2.xcdatamodel"; sourceTree = "<group>"; };
 		199692BC1B02A30600275F4D /* Habit Log.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Habit Log.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		199692C01B02A30600275F4D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		199692C11B02A30600275F4D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -564,9 +565,10 @@
 		199692C31B02A30600275F4D /* Habit_Log.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				19864AE11B0943C50034AC3E /* Habit_Log 2.xcdatamodel */,
 				199692C41B02A30600275F4D /* Habit_Log.xcdatamodel */,
 			);
-			currentVersion = 199692C41B02A30600275F4D /* Habit_Log.xcdatamodel */;
+			currentVersion = 19864AE11B0943C50034AC3E /* Habit_Log 2.xcdatamodel */;
 			path = Habit_Log.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

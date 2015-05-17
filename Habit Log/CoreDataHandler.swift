@@ -30,6 +30,8 @@ class CoreDataHandler {
     init(delegate: CoreDataHandlerDelegate) {
         self.delegate = delegate
         
+        start = NSDate()
+        
         // Get context
         let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         managedContext = appDelegate.managedObjectContext!
@@ -48,6 +50,9 @@ class CoreDataHandler {
         } else {
             self.delegate.failedToFetchData(error!)
         }
+        end = NSDate()
+        
+        println("init: \(end!.timeIntervalSinceDate(start!))")
     }
     
     func getSelectedHabitIndex() -> Int {
@@ -68,9 +73,9 @@ class CoreDataHandler {
         }
         
         if openHabits.count == 0 {
-            var newSelectedIndex = addHabit()
+            addHabit()
             endMeasure("getSelectedHabitIndex")
-            return newSelectedIndex
+            return all_habits.count - 1
         }
         
         for var i = 0; i < all_habits.count; i++ {
@@ -101,7 +106,7 @@ class CoreDataHandler {
         return info
     }
     
-    func addHabit() -> Int {
+    func addHabit() {
         measureStart()
 
         let newHabit = NSManagedObject(entity: habitEntity, insertIntoManagedObjectContext: managedContext)
@@ -111,14 +116,19 @@ class CoreDataHandler {
         newHabit.setValue(true, forKey: "isSelected")
         newHabit.setValue(NSDate(), forKey: "createdAt")
         
+        let newLog = NSManagedObject(entity: logEntity, insertIntoManagedObjectContext: managedContext)
+        newLog.setValue(-1, forKey: "year")
+        newLog.setValue(-1, forKey: "month")
+        newLog.setValue(-1, forKey: "day")
+        
+        newHabit.setValue(NSSet(object: newLog), forKey: "logs")
+        
         all_habits.append(newHabit)
         
         endMeasure("addHabit")
-
-        return all_habits.count - 1
     }
     
-    func deleteHabit(selected_habit_index: Int) -> Int {
+    func deleteHabit(selected_habit_index: Int) {
     
         measureStart()
         
@@ -129,10 +139,10 @@ class CoreDataHandler {
             managedContext.deleteObject(log as! NSManagedObject)
         }
         managedContext.deleteObject(all_habits[selected_habit_index])
+        
+        all_habits.removeAtIndex(selected_habit_index)
 
         endMeasure("deleteHabit")
-
-        return getSelectedHabitIndex()
     }
     
     func updateHabit(selected_habit_index: Int, info: NSDictionary) {
@@ -181,6 +191,10 @@ class CoreDataHandler {
 
         
         endMeasure("deleteLog")
+    }
+    
+    func testFunc(selected_habit_index: Int) {
+        
     }
 }
 
