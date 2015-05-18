@@ -33,7 +33,6 @@ class BlackCoverScreen: UIView {
     }
 
     func screenTapped(sender: AnyObject) {
-        println("hello")
         self.delegate?.blackCoverScreenTapped(sender)
     }
 

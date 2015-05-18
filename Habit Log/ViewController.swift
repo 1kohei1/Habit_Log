@@ -113,17 +113,17 @@ class ViewController: UIViewController, CoreDataHandlerDelegate {
         UIView.animateWithDuration(0.45, delay: 0, options: UIViewAnimationOptions.CurveEaseIn, animations: {
             
             self.settingTableView.frame.origin.y = borderLabelFrame.origin.y + borderLabelFrame.size.height + yOffset
-            self.blackCoverScreen.alpha = blackCoverScreen.isSettingOpen ? 0.0 : 0.45
+            self.blackCoverScreen.alpha = self.blackCoverScreen.isSettingOpen ? 0.0 : 0.45
             
             }, completion: {(val: Bool) -> Void in
-                if blackCoverScreen.isSettingOpen {
+                if self.blackCoverScreen.isSettingOpen {
                     self.settingButton.setImage(UIImage(named: "setting2.png"), forState: UIControlState.Normal)
                     self.settingButton.tintColor = UIColor.blackColor()
                     self.deleteButton.hidden = true
                     
                     self.view.endEditing(true)
                     self.settingTableView.userInteractionEnabled = false
-                    blackCoverScreen.isSettingOpen = false
+                    self.blackCoverScreen.isSettingOpen = false
                     
                     if let btn = sender as? UIButton {
                         self.saveChange()
@@ -135,7 +135,7 @@ class ViewController: UIViewController, CoreDataHandlerDelegate {
                     self.blackCoverScreen.userInteractionEnabled = true
                     
                     self.settingTableView.userInteractionEnabled = true
-                    blackCoverScreen.isSettingOpen = true
+                    self.blackCoverScreen.isSettingOpen = true
                 }
                 
                 self.settingButton.userInteractionEnabled = true
