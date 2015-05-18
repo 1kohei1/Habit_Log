@@ -29,20 +29,7 @@ class ViewController: UIViewController, CoreDataHandlerDelegate {
     var coreDataHandler: CoreDataHandler?
     var selected_habit_index: Int = -1
     var selectedDayView: CVCalendarDayView?
-    
-    var logDates = NSArray(array: [
-        CVDate(day: 3, month: 4, week: 2, year: 2015),
-        CVDate(day: 9, month: 4, week: 2, year: 2015),
-        CVDate(day: 19, month: 4, week: 4, year: 2015),
-        CVDate(day: 22, month: 4, week: 4, year: 2015),
-        CVDate(day: 3, month: 5, week: 2, year: 2015),
-        CVDate(day: 6, month: 5, week: 2, year: 2015),
-        CVDate(day: 8, month: 5, week: 2, year: 2015),
-        CVDate(day: 10, month: 5, week: 3, year: 2015),
-        CVDate(day: 12, month: 5, week: 3, year: 2015),
-        CVDate(day: 14, month: 5, week: 3, year: 2015),
-        ])
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -92,12 +79,7 @@ class ViewController: UIViewController, CoreDataHandlerDelegate {
         blackCoverScreen = BlackCoverScreen(frame: self.view.frame)
         blackCoverScreen.delegate = self
         
-        self.view.bringSubviewToFront(self.habitTitle)
-        self.view.bringSubviewToFront(self.borderLabel)
-        self.view.bringSubviewToFront(whiteLabel)
-        self.view.bringSubviewToFront(self.settingButton)
-        self.view.bringSubviewToFront(self.deleteButton)
-        
+        self.bringSubviewsToFront([self.habitTitle, self.borderLabel, whiteLabel, settingButton, deleteButton])
         self.view.insertSubview(settingTableView, belowSubview: self.habitTitle)
         self.view.insertSubview(blackCoverScreen, belowSubview: settingTableView)
     }
@@ -161,10 +143,7 @@ class ViewController: UIViewController, CoreDataHandlerDelegate {
     func reflectHabitChange() {
         var info = self.coreDataHandler!.getSelectedHabitInfo(selected_habit_index)
         
-        // Habit title update
         self.habitTitle.text = info.valueForKey("title") as? String
-        
-        // SetingTableView update
         settingTableView.reflectHabitChange(info)
     }
     
@@ -254,11 +233,8 @@ extension ViewController: CVCalendarViewDelegate {
     }
     
     func supplementaryView(shouldDisplayOnDayView dayView: DayView) -> Bool {
-        if logDates.indexOfObject(dayView.date) == NSNotFound {
-            return false
-        } else {
-            return true
-        }
+        var date = dayView.date
+        return self.coreDataHandler!.checkSupplementaryView(selected_habit_index, year: date.year, month: date.month, day: date.day)
     }
 
     func supplementaryView(viewOnDayView dayView: DayView) -> UIView {
@@ -277,5 +253,11 @@ extension ViewController: CVCalendarViewDelegate {
 extension ViewController {
     func printFrame(name: String, frame: CGRect) {
         println("\(name) x: \(frame.origin.x), y: \(frame.origin.y), width: \(frame.size.width), height: \(frame.size.height)")
+    }
+    
+    func bringSubviewsToFront(subviews: [UIView]) {
+        for view in subviews {
+            self.view.bringSubviewToFront(view)
+        }
     }
 }

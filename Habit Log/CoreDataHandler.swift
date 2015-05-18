@@ -193,6 +193,35 @@ class CoreDataHandler {
         endMeasure("deleteLog")
     }
     
+    func checkSupplementaryView(selected_habit_index: Int, year: Int, month: Int, day: Int) -> Bool {
+        
+        measureStart()
+
+        var logs = all_habits[selected_habit_index].mutableSetValueForKey("logs")
+        var predicate: NSPredicate
+
+        predicate = NSPredicate(format: "year == %d", year)
+        var yearLogs: NSSet = logs.filteredSetUsingPredicate(predicate)
+        if yearLogs.count == 0 {
+            endMeasure("checkSupplementaryView(\(year)/\(month)/\(day))")
+            return false
+        }
+        
+        predicate = NSPredicate(format: "month == %d", month)
+        var monthLogs: NSSet = yearLogs.filteredSetUsingPredicate(predicate)
+        if  monthLogs.count == 0 {
+            endMeasure("checkSupplementaryView(\(year)/\(month)/\(day))")
+            return false
+        }
+        
+        predicate = NSPredicate(format: "day == %d", day)
+        var dayLog = monthLogs.filteredSetUsingPredicate(predicate)
+        
+        endMeasure("checkSupplementaryView(\(year)/\(month)/\(day))")
+        
+        return dayLog.count == 1
+    }
+    
     func testFunc(selected_habit_index: Int) {
         
     }
@@ -206,9 +235,5 @@ extension CoreDataHandler {
     func endMeasure(title: String) {
         end = NSDate()
         println("\(title): \(end!.timeIntervalSinceDate(start!))")
-    }
-    
-    func findNextSelectedHabitIndex() -> Int {
-        return 1
     }
 }

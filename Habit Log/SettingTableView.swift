@@ -183,7 +183,6 @@ extension SettingTableView {
     }
     
     func changeFontForHeaderTitle() {
-        // Change the font for settingTableView header
         var titleLabel = settingTableView.headerViewForSection(0)
         if titleLabel != nil {
             titleLabel!.textLabel.font = UIFont(name: "Avenir-Medium", size: 13)
