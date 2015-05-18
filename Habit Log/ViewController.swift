@@ -23,9 +23,8 @@ class ViewController: UIViewController, CoreDataHandlerDelegate {
     let FLAT_GREEN_COLOR: UIColor = UIColor(red: 0.180, green: 0.800, blue: 0.443, alpha: 0.80)
 
     var settingTableView: SettingTableView = SettingTableView()
-    var blackCoverScreen: UIView = UIView()
+    var blackCoverScreen: BlackCoverScreen = BlackCoverScreen()
     var animationFinished = true
-    var isSettingOpen = false
     
     var coreDataHandler: CoreDataHandler?
     var selected_habit_index: Int = -1
@@ -79,23 +78,19 @@ class ViewController: UIViewController, CoreDataHandlerDelegate {
     }
     
     func setUpSettingTableView() {
+        // UILabel to cover status bar
+        var whiteLabel = UILabel(frame: CGRectMake(0, 0, self.view.frame.size.width, 28))
+        whiteLabel.backgroundColor = UIColor.whiteColor()
+        self.view.addSubview(whiteLabel)
+
         var borderLabelFrame = self.borderLabel.frame
         var yOffset = borderLabelFrame.origin.y + borderLabelFrame.size.height + 2 - 244
         
         settingTableView = SettingTableView(frame: CGRectMake(0, yOffset, self.view.frame.size.width, 244))
         settingTableView.delegate = self
         
-        // UILabel to cover status bar
-        var whiteLabel = UILabel(frame: CGRectMake(0, 0, self.view.frame.size.width, 28))
-        whiteLabel.backgroundColor = UIColor.whiteColor()
-        self.view.addSubview(whiteLabel)
-        
-        // UIView for covering calendar
-        blackCoverScreen.frame = self.view.frame
-        blackCoverScreen.backgroundColor = UIColor.blackColor()
-        blackCoverScreen.alpha = 0.0
-        blackCoverScreen.userInteractionEnabled = false
-        blackCoverScreen.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "settingPushed:"))
+        blackCoverScreen = BlackCoverScreen(frame: self.view.frame)
+        blackCoverScreen.delegate = self
         
         self.view.bringSubviewToFront(self.habitTitle)
         self.view.bringSubviewToFront(self.borderLabel)
@@ -113,22 +108,22 @@ class ViewController: UIViewController, CoreDataHandlerDelegate {
         self.settingButton.userInteractionEnabled = false
         
         var borderLabelFrame = self.borderLabel.frame
-        var yOffset: CGFloat = self.isSettingOpen ? -242.0 : -10.0
+        var yOffset: CGFloat = blackCoverScreen.isSettingOpen ? -242.0 : -10.0
 
         UIView.animateWithDuration(0.45, delay: 0, options: UIViewAnimationOptions.CurveEaseIn, animations: {
             
             self.settingTableView.frame.origin.y = borderLabelFrame.origin.y + borderLabelFrame.size.height + yOffset
-            self.blackCoverScreen.alpha = self.isSettingOpen ? 0.0 : 0.45
+            self.blackCoverScreen.alpha = blackCoverScreen.isSettingOpen ? 0.0 : 0.45
             
             }, completion: {(val: Bool) -> Void in
-                if self.isSettingOpen {
+                if blackCoverScreen.isSettingOpen {
                     self.settingButton.setImage(UIImage(named: "setting2.png"), forState: UIControlState.Normal)
                     self.settingButton.tintColor = UIColor.blackColor()
                     self.deleteButton.hidden = true
                     
                     self.view.endEditing(true)
                     self.settingTableView.userInteractionEnabled = false
-                    self.isSettingOpen = false
+                    blackCoverScreen.isSettingOpen = false
                     
                     if let btn = sender as? UIButton {
                         self.saveChange()
@@ -140,7 +135,7 @@ class ViewController: UIViewController, CoreDataHandlerDelegate {
                     self.blackCoverScreen.userInteractionEnabled = true
                     
                     self.settingTableView.userInteractionEnabled = true
-                    self.isSettingOpen = true
+                    blackCoverScreen.isSettingOpen = true
                 }
                 
                 self.settingButton.userInteractionEnabled = true
@@ -189,9 +184,17 @@ class ViewController: UIViewController, CoreDataHandlerDelegate {
     }
 }
 
-extension ViewController: SettingTableViewProtocol {
+extension ViewController: SettingTableViewProtocol, BlackCoverScreenProtocol {
     func shouldEndEditing() {
         self.view.endEditing(true)
+    }
+    
+    func blackCoverScreenTapped(sender: AnyObject) {
+        if blackCoverScreen.isSettingOpen {
+            self.settingPushed(sender)
+        } else if blackCoverScreen.isBottomOpen {
+            
+        }
     }
 }
 
