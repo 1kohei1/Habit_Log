@@ -85,9 +85,10 @@ class ViewController: UIViewController, CoreDataHandlerDelegate {
     }
     
     @IBAction func settingPushed(sender: AnyObject) {
-        self.blackCoverScreen.userInteractionEnabled = false
         self.deleteButton.userInteractionEnabled = false
         self.settingButton.userInteractionEnabled = false
+        
+        self.blackCoverScreen.userInteractionEnabled = false
         
         var borderLabelFrame = self.borderLabel.frame
         var yOffset: CGFloat = blackCoverScreen.isSettingOpen ? -242.0 : -10.0
@@ -98,30 +99,25 @@ class ViewController: UIViewController, CoreDataHandlerDelegate {
             self.blackCoverScreen.alpha = self.blackCoverScreen.isSettingOpen ? 0.0 : 0.45
             
             }, completion: {(val: Bool) -> Void in
-                if self.blackCoverScreen.isSettingOpen {
-                    self.settingButton.setImage(UIImage(named: "setting2.png"), forState: UIControlState.Normal)
-                    self.settingButton.tintColor = UIColor.blackColor()
-                    self.deleteButton.hidden = true
-                    
-                    self.view.endEditing(true)
-                    self.settingTableView.userInteractionEnabled = false
-                    self.blackCoverScreen.isSettingOpen = false
-                    
-                    if let btn = sender as? UIButton {
-                        self.saveChange()
-                    }
-                } else {
-                    self.settingButton.setImage(UIImage(named: "save.png"), forState: UIControlState.Normal)
-                    self.settingButton.tintColor = self.FLAT_GREEN_COLOR
-                    self.deleteButton.hidden = false
-                    self.blackCoverScreen.userInteractionEnabled = true
-                    
-                    self.settingTableView.userInteractionEnabled = true
-                    self.blackCoverScreen.isSettingOpen = true
+                var imageName = self.blackCoverScreen.isSettingOpen ? "setting2.png" : "save.png"
+                var tintColor = self.blackCoverScreen.isSettingOpen ? UIColor.blackColor() : self.FLAT_GREEN_COLOR
+                
+                self.settingButton.setImage(UIImage(named: imageName), forState: UIControlState.Normal)
+                self.settingButton.tintColor = tintColor
+                self.settingButton.userInteractionEnabled = true
+                
+                self.deleteButton.userInteractionEnabled = true
+                self.deleteButton.hidden = self.blackCoverScreen.isSettingOpen
+                self.view.endEditing(true)
+                
+                if let btn = sender as? UIButton where self.blackCoverScreen.isSettingOpen {
+                    self.saveChange()
                 }
                 
-                self.settingButton.userInteractionEnabled = true
-                self.deleteButton.userInteractionEnabled = true
+                self.blackCoverScreen.isSettingOpen = !self.blackCoverScreen.isSettingOpen
+                
+                self.settingTableView.userInteractionEnabled = self.blackCoverScreen.isSettingOpen
+                self.blackCoverScreen.userInteractionEnabled = self.blackCoverScreen.isSettingOpen
         })
         
         self.settingTableView.changeFontForHeaderTitle()
