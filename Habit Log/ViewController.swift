@@ -22,7 +22,7 @@ class ViewController: UIViewController, CoreDataHandlerDelegate {
     
     let FLAT_GREEN_COLOR: UIColor = UIColor(red: 0.180, green: 0.800, blue: 0.443, alpha: 0.80)
 
-    var settingTableView: UITableView = UITableView()
+    var settingTableView: SettingTableView = SettingTableView()
     var blackCoverScreen: UIView = UIView()
     var animationFinished = true
     var isSettingOpen = false
@@ -71,8 +71,6 @@ class ViewController: UIViewController, CoreDataHandlerDelegate {
         
         self.menuView.commitMenuViewUpdate()
         self.calendarView.commitCalendarViewUpdate()
-        
-        var end = NSDate()
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -84,9 +82,8 @@ class ViewController: UIViewController, CoreDataHandlerDelegate {
         var borderLabelFrame = self.borderLabel.frame
         var yOffset = borderLabelFrame.origin.y + borderLabelFrame.size.height + 2 - 244
         
-        settingTableView = UITableView(frame: CGRectMake(0, yOffset, self.view.frame.size.width, 244), style: UITableViewStyle.Grouped)
+        settingTableView = SettingTableView(frame: CGRectMake(0, yOffset, self.view.frame.size.width, 244))
         settingTableView.delegate = self
-        settingTableView.dataSource = self
         
         // UILabel to cover status bar
         var whiteLabel = UILabel(frame: CGRectMake(0, 0, self.view.frame.size.width, 28))
@@ -108,8 +105,6 @@ class ViewController: UIViewController, CoreDataHandlerDelegate {
         
         self.view.insertSubview(settingTableView, belowSubview: self.habitTitle)
         self.view.insertSubview(blackCoverScreen, belowSubview: settingTableView)
-        
-        settingTableView.reloadData()
     }
     
     @IBAction func settingPushed(sender: AnyObject) {
@@ -152,15 +147,7 @@ class ViewController: UIViewController, CoreDataHandlerDelegate {
                 self.deleteButton.userInteractionEnabled = true
         })
         
-        // Change the font for settingTableView header
-        var titleLabel = settingTableView.headerViewForSection(0)
-        if titleLabel != nil {
-            titleLabel!.textLabel.font = UIFont(name: "Avenir-Medium", size: 13)
-        }
-        titleLabel = settingTableView.headerViewForSection(1)
-        if titleLabel != nil {
-            titleLabel!.textLabel.font = UIFont(name: "Avenir-Medium", size: 13)
-        }
+        self.settingTableView.changeFontForHeaderTitle()
     }
     
     @IBAction func deletePushed(sender: AnyObject) {
@@ -183,36 +170,14 @@ class ViewController: UIViewController, CoreDataHandlerDelegate {
         self.habitTitle.text = info.valueForKey("title") as? String
         
         // SetingTableView update
-        var cell: UITableViewCell?
-        cell = settingTableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0))
-        var titleTextField = cell!.viewWithTag(9) as! UITextField
-        titleTextField.text = info.valueForKey("title") as? String
-        
-        cell = settingTableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 1))
-        var secretSwitch = cell!.viewWithTag(10) as! UISwitch
-        secretSwitch.setOn(info.valueForKey("isSecret") as! Bool, animated: false)
-        
-        cell = settingTableView.cellForRowAtIndexPath(NSIndexPath(forRow: 1, inSection: 1))
-        var passwordTextField = cell!.viewWithTag(12) as! UITextField
-        passwordTextField.text = info.valueForKey("password") as? String
+        settingTableView.reflectHabitChange(info)
     }
     
     func saveChange() {
-        var cell: UITableViewCell?
-        cell = settingTableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0))
-        var titleTextField = cell!.viewWithTag(9) as! UITextField
+        var info = settingTableView.getHabitInfo()
         
-        cell = settingTableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 1))
-        var secretSwitch = cell!.viewWithTag(10) as! UISwitch
-        
-        cell = settingTableView.cellForRowAtIndexPath(NSIndexPath(forRow: 1, inSection: 1))
-        var passwordTextField = cell!.viewWithTag(12) as! UITextField
-        
-        var keys = ["title", "isSecret", "password"]
-        var values = [titleTextField.text, secretSwitch.on, passwordTextField.text]
-        
-        self.coreDataHandler!.updateHabit(selected_habit_index, info: NSDictionary(objects: values as [AnyObject], forKeys: keys))
-        self.habitTitle.text = titleTextField.text
+        self.coreDataHandler!.updateHabit(selected_habit_index, info: info)
+        self.habitTitle.text = info.valueForKey("title") as? String
     }
     
     func failedToFetchData(error: NSError) {
@@ -224,114 +189,9 @@ class ViewController: UIViewController, CoreDataHandlerDelegate {
     }
 }
 
-extension ViewController: UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate {
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 2
-    }
-    
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == 0 {
-            return 1
-        } else {
-            return 2
-        }
-    }
-    
-    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if section == 0 {
-            return "HABIT TITLE"
-        } else {
-            return "SECRET"
-        }
-    }
-    
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell: UITableViewCell?
-        if indexPath.section == 0 {
-            cell = tableView.dequeueReusableCellWithIdentifier("Cell1") as? UITableViewCell
-        } else {
-            if indexPath.row == 0 {
-                cell = tableView.dequeueReusableCellWithIdentifier("Cell2") as? UITableViewCell
-            } else {
-                cell = tableView.dequeueReusableCellWithIdentifier("Cell3") as? UITableViewCell
-            }
-        }
-        
-        if cell == nil {
-            if indexPath.section == 0 {
-                cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "Cell2")
-                
-                var textField = UITextField(frame: CGRectMake(0, 0, self.view.frame.size.width, cell!.frame.size.height))
-                textField.tag = 9
-                textField.placeholder = "Enter Title"
-                textField.font = UIFont(name: "Avenir", size: 20)
-                textField.textAlignment = NSTextAlignment.Center
-                textField.borderStyle = UITextBorderStyle.None
-                textField.returnKeyType = UIReturnKeyType.Done
-                textField.delegate = self
-                
-                cell?.addSubview(textField)
-            } else {
-                var titleLabel = UILabel(frame: CGRectMake(16, 0, self.view.frame.size.width / 2, 44))
-                titleLabel.font = UIFont(name: "Avenir", size: 20)
-                titleLabel.tag = 11
-                
-                if indexPath.row == 0 {
-                    cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "Cell2")
-                    
-                    titleLabel.text = "Secret"
-                    cell!.addSubview(titleLabel)
-                    
-                    var secretSwitch = UISwitch(frame: CGRectMake(self.view.frame.size.width - 16 - 51, 6.5, 51, 31))
-                    secretSwitch.tag = 10
-                    secretSwitch.addTarget(self, action: "secretSwitchChanged:", forControlEvents: UIControlEvents.ValueChanged)
-                    cell!.addSubview(secretSwitch)
-                } else {
-                    cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "Cell3")
-                    
-                    titleLabel.text = "Password"
-                    titleLabel.alpha = 0.2
-                    cell!.addSubview(titleLabel)
-                    
-                    var textField = UITextField(frame: CGRectMake(self.view.frame.size.width / 2, 0, self.view.frame.size.width / 2, cell!.frame.size.height))
-                    textField.tag = 12
-                    textField.placeholder = "Enter Password"
-                    textField.secureTextEntry = true
-                    textField.font = UIFont(name: "Avenir", size: 20)
-                    textField.textAlignment = NSTextAlignment.Center
-                    textField.borderStyle = UITextBorderStyle.None
-                    textField.returnKeyType = UIReturnKeyType.Done
-                    textField.userInteractionEnabled = false
-                    textField.delegate = self
-                    
-                    cell?.addSubview(textField)
-                }
-            }
-        }
-
-        cell?.selectionStyle = UITableViewCellSelectionStyle.None
-        
-        return cell!
-    }
-    
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+extension ViewController: SettingTableViewProtocol {
+    func shouldEndEditing() {
         self.view.endEditing(true)
-        return false
-    }
-    
-    func secretSwitchChanged(sender:UISwitch!) {
-        var indexPath = NSIndexPath(forRow: 1, inSection: 1)
-        var cell = settingTableView.cellForRowAtIndexPath(indexPath)
-        
-        if sender.on {
-            cell?.viewWithTag(11)?.alpha = 1
-            cell?.viewWithTag(12)?.alpha = 1
-            cell?.viewWithTag(12)?.userInteractionEnabled = true
-        } else {
-            cell?.viewWithTag(11)?.alpha = 0.2
-            cell?.viewWithTag(12)?.alpha = 0.2
-            cell?.viewWithTag(12)?.userInteractionEnabled = false
-        }
     }
 }
 

@@ -13,6 +13,7 @@
 		1982B2911B03E988007BD023 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1982B2901B03E988007BD023 /* QuartzCore.framework */; };
 		19864ADE1B09269F0034AC3E /* CoreDataHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19864ADD1B09269F0034AC3E /* CoreDataHandler.swift */; };
 		19864AE01B0932FB0034AC3E /* HabitImageHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19864ADF1B0932FB0034AC3E /* HabitImageHandler.swift */; };
+		19864AE71B0968510034AC3E /* SettingTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19864AE61B0968510034AC3E /* SettingTableView.swift */; };
 		199692C21B02A30600275F4D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199692C11B02A30600275F4D /* AppDelegate.swift */; };
 		199692C51B02A30600275F4D /* Habit_Log.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 199692C31B02A30600275F4D /* Habit_Log.xcdatamodeld */; };
 		199692C71B02A30600275F4D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199692C61B02A30600275F4D /* ViewController.swift */; };
@@ -67,6 +68,7 @@
 		19864ADD1B09269F0034AC3E /* CoreDataHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataHandler.swift; sourceTree = "<group>"; };
 		19864ADF1B0932FB0034AC3E /* HabitImageHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HabitImageHandler.swift; sourceTree = "<group>"; };
 		19864AE11B0943C50034AC3E /* Habit_Log 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Habit_Log 2.xcdatamodel"; sourceTree = "<group>"; };
+		19864AE61B0968510034AC3E /* SettingTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingTableView.swift; sourceTree = "<group>"; };
 		199692BC1B02A30600275F4D /* Habit Log.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Habit Log.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		199692C01B02A30600275F4D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		199692C11B02A30600275F4D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -150,6 +152,7 @@
 			children = (
 				199692C11B02A30600275F4D /* AppDelegate.swift */,
 				199692C61B02A30600275F4D /* ViewController.swift */,
+				19864AE61B0968510034AC3E /* SettingTableView.swift */,
 				19864ADD1B09269F0034AC3E /* CoreDataHandler.swift */,
 				19864ADF1B0932FB0034AC3E /* HabitImageHandler.swift */,
 				199692C81B02A30600275F4D /* Main.storyboard */,
@@ -338,6 +341,7 @@
 				199692FF1B02A32700275F4D /* CVCalendarContentViewController.swift in Sources */,
 				199693051B02A32700275F4D /* CVCalendarMonthContentViewController.swift in Sources */,
 				199692C71B02A30600275F4D /* ViewController.swift in Sources */,
+				19864AE71B0968510034AC3E /* SettingTableView.swift in Sources */,
 				199693031B02A32700275F4D /* CVCalendarMenuView.swift in Sources */,
 				199692C21B02A30600275F4D /* AppDelegate.swift in Sources */,
 				199693061B02A32700275F4D /* CVCalendarMonthView.swift in Sources */,
