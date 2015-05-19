@@ -35,5 +35,4 @@ class BlackCoverScreen: UIView {
     func screenTapped(sender: AnyObject) {
         self.delegate?.blackCoverScreenTapped(sender)
     }
-
 }

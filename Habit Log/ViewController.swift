@@ -19,12 +19,17 @@ class ViewController: UIViewController, CoreDataHandlerDelegate {
     @IBOutlet weak var borderLabel: UILabel!
     @IBOutlet weak var settingButton: UIButton!
     @IBOutlet weak var deleteButton: UIButton!
+    @IBOutlet weak var menuButton: UIButton!
     
     let FLAT_GREEN_COLOR: UIColor = UIColor(red: 0.180, green: 0.800, blue: 0.443, alpha: 0.80)
 
     var settingTableView: SettingTableView = SettingTableView()
     var blackCoverScreen: BlackCoverScreen = BlackCoverScreen()
+    var habitMenu: HabitMenu?
+    
     var animationFinished = true
+    var isSettingOpen = false
+    var isBottomButtonOpen = false
     
     var coreDataHandler: CoreDataHandler?
     var selected_habit_index: Int = -1
@@ -60,16 +65,16 @@ class ViewController: UIViewController, CoreDataHandlerDelegate {
     }
     
     override func viewDidAppear(animated: Bool) {
-        setUpSettingTableView()
-        reflectHabitChange()
+         setUpOtherViewComponents()
+         reflectHabits()
     }
     
-    func setUpSettingTableView() {
+    func setUpOtherViewComponents() {
         // UILabel to cover status bar
         var whiteLabel = UILabel(frame: CGRectMake(0, 0, self.view.frame.size.width, 28))
         whiteLabel.backgroundColor = UIColor.whiteColor()
         self.view.addSubview(whiteLabel)
-
+        
         var borderLabelFrame = self.borderLabel.frame
         var yOffset = borderLabelFrame.origin.y + borderLabelFrame.size.height + 2 - 244
         
@@ -79,11 +84,27 @@ class ViewController: UIViewController, CoreDataHandlerDelegate {
         blackCoverScreen = BlackCoverScreen(frame: self.view.frame)
         blackCoverScreen.delegate = self
         
-        self.bringSubviewsToFront([self.habitTitle, self.borderLabel, whiteLabel, settingButton, deleteButton])
+        habitMenu = HabitMenu(frame: CGRectMake(-100, 28, 100, self.view.frame.size.height - 28), coreDataHandler: self.coreDataHandler!)
+        habitMenu!.habitMenuDelegate = self
+        
+        self.bringSubviewsToFront([self.habitTitle, self.borderLabel, whiteLabel, settingButton, deleteButton, menuButton])
         self.view.insertSubview(settingTableView, belowSubview: self.habitTitle)
         self.view.insertSubview(blackCoverScreen, belowSubview: settingTableView)
+        self.view.addSubview(habitMenu!)
+        
+        self.menuButton.alpha = 1
+        self.menuButton.hidden = false
+        printFrame("menuButton", frame: self.menuButton.frame)
     }
     
+    func reflectHabits() {
+        var info = self.coreDataHandler!.getSelectedHabitInfo(selected_habit_index)
+        
+        self.habitTitle.text = info.valueForKey("title") as? String
+        settingTableView.reflectHabitChange(info)
+    }
+    
+    // Code here is really messy. Refactor later.
     @IBAction func settingPushed(sender: AnyObject) {
         self.deleteButton.userInteractionEnabled = false
         self.settingButton.userInteractionEnabled = false
@@ -97,6 +118,7 @@ class ViewController: UIViewController, CoreDataHandlerDelegate {
             
             self.settingTableView.frame.origin.y = borderLabelFrame.origin.y + borderLabelFrame.size.height + yOffset
             self.blackCoverScreen.alpha = self.blackCoverScreen.isSettingOpen ? 0.0 : 0.45
+            self.habitMenu!.frame.origin.x = -100
             
             }, completion: {(val: Bool) -> Void in
                 var imageName = self.blackCoverScreen.isSettingOpen ? "setting2.png" : "save.png"
@@ -111,13 +133,17 @@ class ViewController: UIViewController, CoreDataHandlerDelegate {
                 self.view.endEditing(true)
                 
                 if let btn = sender as? UIButton where self.blackCoverScreen.isSettingOpen {
-                    self.saveChange()
+                    var info = self.settingTableView.getHabitInfo()
+                    
+                    self.coreDataHandler!.updateHabit(self.selected_habit_index, info: info)
+                    self.habitTitle.text = info.valueForKey("title") as? String
                 }
                 
                 self.blackCoverScreen.isSettingOpen = !self.blackCoverScreen.isSettingOpen
                 
                 self.settingTableView.userInteractionEnabled = self.blackCoverScreen.isSettingOpen
                 self.blackCoverScreen.userInteractionEnabled = self.blackCoverScreen.isSettingOpen
+                self.menuButton.hidden = self.blackCoverScreen.isSettingOpen
         })
         
         self.settingTableView.changeFontForHeaderTitle()
@@ -132,22 +158,19 @@ class ViewController: UIViewController, CoreDataHandlerDelegate {
         self.coreDataHandler!.updateHabit(selected_habit_index, info: NSDictionary(object: true, forKey: "isSelected"))
         
         self.settingPushed(1)
-        reflectHabitChange()
+        reflectHabits()
         self.calendarView.commitCalendarViewUpdate()
     }
     
-    func reflectHabitChange() {
-        var info = self.coreDataHandler!.getSelectedHabitInfo(selected_habit_index)
+    @IBAction func menuPushed(sender: AnyObject) {
+        self.blackCoverScreen.userInteractionEnabled = false
+        UIView.animateWithDuration(0.45, delay: 0, options: UIViewAnimationOptions.CurveEaseIn, animations: {
+            self.habitMenu!.frame.origin.x = 0
+            self.blackCoverScreen.alpha = 0.45
+            }, completion: {(val: Bool) -> Void in
+                self.blackCoverScreen.userInteractionEnabled = true
+        })
         
-        self.habitTitle.text = info.valueForKey("title") as? String
-        settingTableView.reflectHabitChange(info)
-    }
-    
-    func saveChange() {
-        var info = settingTableView.getHabitInfo()
-        
-        self.coreDataHandler!.updateHabit(selected_habit_index, info: info)
-        self.habitTitle.text = info.valueForKey("title") as? String
     }
     
     func failedToFetchData(error: NSError) {
@@ -159,17 +182,31 @@ class ViewController: UIViewController, CoreDataHandlerDelegate {
     }
 }
 
-extension ViewController: SettingTableViewProtocol, BlackCoverScreenProtocol {
+extension ViewController: SettingTableViewProtocol, BlackCoverScreenProtocol, HabitMenuProtocol {
     func shouldEndEditing() {
         self.view.endEditing(true)
     }
     
     func blackCoverScreenTapped(sender: AnyObject) {
+        self.blackCoverScreen.userInteractionEnabled = false
+        UIView.animateWithDuration(0.45, delay: 0, options: UIViewAnimationOptions.CurveEaseIn, animations: {
+            self.habitMenu!.frame.origin.x = -100
+            self.blackCoverScreen.alpha = 0.0
+            }, completion: {(val: Bool) -> Void in
+                self.blackCoverScreen.userInteractionEnabled = true
+        })
+        
         if blackCoverScreen.isSettingOpen {
             self.settingPushed(sender)
-        } else if blackCoverScreen.isBottomOpen {
-            
         }
+    }
+    
+    func shouldUpdateLog() {
+        
+    }
+    
+    func cellSelected(selected_index: Int) {
+        
     }
 }
 

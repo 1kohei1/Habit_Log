@@ -27,7 +27,7 @@ class HabitImageHandler {
         return UIImage()
     }
     
-    func updateHabitImageAtIndex(habit_index: Int, calendarView: UIView) -> UIImage {
+    func updateHabitImageAtIndex(habit_index: Int, calendarView: UIView, habitMenu: HabitMenu) -> UIImage {
         // Implement later
         return UIImage()
     }

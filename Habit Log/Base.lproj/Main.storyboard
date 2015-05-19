@@ -84,10 +84,20 @@
                                     <outlet property="calendarDelegate" destination="vXZ-lx-hvc" id="HkI-l1-MYv"/>
                                 </connections>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gwp-hh-yYl">
+                                <rect key="frame" x="16" y="30" width="32" height="32"/>
+                                <state key="normal" image="bottomMenu.png">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="menuPushed:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="4DA-c1-bM0"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="wiN-uA-dcg" firstAttribute="centerY" secondItem="S9p-im-hIR" secondAttribute="centerY" id="2FW-ag-0yZ"/>
+                            <constraint firstItem="gwp-hh-yYl" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="10" id="3SV-Do-o9p"/>
                             <constraint firstAttribute="centerX" secondItem="zih-I7-4b1" secondAttribute="centerX" id="3Yz-PG-bpt"/>
                             <constraint firstItem="S9p-im-hIR" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="10" id="9Vg-gK-f7g"/>
                             <constraint firstItem="wiN-uA-dcg" firstAttribute="centerY" secondItem="2gi-jO-7Js" secondAttribute="centerY" id="B8o-l1-rsX"/>
@@ -97,11 +107,13 @@
                             <constraint firstItem="2gi-jO-7Js" firstAttribute="trailing" secondItem="kh9-bI-dsS" secondAttribute="trailingMargin" id="KNY-gW-jGV"/>
                             <constraint firstItem="wiN-uA-dcg" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="8" id="LSJ-Ty-TNb"/>
                             <constraint firstItem="2gi-jO-7Js" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="10" id="MPl-DK-jKa"/>
+                            <constraint firstItem="gwp-hh-yYl" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" id="OQe-l1-omN"/>
                             <constraint firstItem="Auq-1G-0SY" firstAttribute="width" secondItem="kh9-bI-dsS" secondAttribute="width" id="UU0-5p-76X"/>
                             <constraint firstItem="l5P-34-OrB" firstAttribute="top" secondItem="wiN-uA-dcg" secondAttribute="bottom" constant="8" id="WNO-5o-EXf"/>
                             <constraint firstItem="zih-I7-4b1" firstAttribute="width" secondItem="kh9-bI-dsS" secondAttribute="width" id="acd-uO-WFI"/>
                             <constraint firstItem="Di9-BH-HSB" firstAttribute="top" secondItem="Auq-1G-0SY" secondAttribute="bottom" constant="1" id="c0W-yX-HB9"/>
                             <constraint firstItem="wiN-uA-dcg" firstAttribute="centerY" secondItem="S9p-im-hIR" secondAttribute="centerY" id="cbG-VW-my5"/>
+                            <constraint firstItem="wiN-uA-dcg" firstAttribute="centerY" secondItem="gwp-hh-yYl" secondAttribute="centerY" id="dZU-81-Gn1"/>
                             <constraint firstItem="Auq-1G-0SY" firstAttribute="top" secondItem="l5P-34-OrB" secondAttribute="bottom" constant="8" id="fUN-j8-OF0"/>
                             <constraint firstItem="S9p-im-hIR" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" id="gtP-ks-VwP"/>
                             <constraint firstItem="2gi-jO-7Js" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="536" id="iDN-yA-bBN"/>
@@ -141,6 +153,7 @@
                         <outlet property="calendarView" destination="Di9-BH-HSB" id="2B9-wo-Dpw"/>
                         <outlet property="deleteButton" destination="S9p-im-hIR" id="gUq-eN-TQ9"/>
                         <outlet property="habitTitle" destination="wiN-uA-dcg" id="0f7-j6-SpP"/>
+                        <outlet property="menuButton" destination="gwp-hh-yYl" id="1Fx-JP-qjm"/>
                         <outlet property="menuView" destination="Auq-1G-0SY" id="3ck-6h-sLF"/>
                         <outlet property="monthLabel" destination="l5P-34-OrB" id="MWr-1A-NNZ"/>
                         <outlet property="settingButton" destination="2gi-jO-7Js" id="1GH-zL-YWe"/>
@@ -151,6 +164,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="bottomMenu.png" width="32" height="32"/>
         <image name="delete.png" width="32" height="32"/>
         <image name="setting2.png" width="32" height="32"/>
     </resources>

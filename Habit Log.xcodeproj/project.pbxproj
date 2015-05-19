@@ -10,7 +10,8 @@
 		190BECB61B05595600A8ECDA /* setting2.png in Resources */ = {isa = PBXBuildFile; fileRef = 190BECB41B05595600A8ECDA /* setting2.png */; };
 		190BECBD1B0578B200A8ECDA /* delete.png in Resources */ = {isa = PBXBuildFile; fileRef = 190BECBC1B0578B200A8ECDA /* delete.png */; };
 		190BECBF1B06CE8300A8ECDA /* save.png in Resources */ = {isa = PBXBuildFile; fileRef = 190BECBE1B06CE8300A8ECDA /* save.png */; };
-		196FE29C1B09813E0012BF9F /* BottomMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196FE29B1B09813E0012BF9F /* BottomMenu.swift */; };
+		196FE29E1B099D2D0012BF9F /* bottomMenu.png in Resources */ = {isa = PBXBuildFile; fileRef = 196FE29D1B099D2D0012BF9F /* bottomMenu.png */; };
+		196FE2A01B0ADC000012BF9F /* HabitMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196FE29F1B0ADC000012BF9F /* HabitMenu.swift */; };
 		1982B2911B03E988007BD023 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1982B2901B03E988007BD023 /* QuartzCore.framework */; };
 		19864ADE1B09269F0034AC3E /* CoreDataHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19864ADD1B09269F0034AC3E /* CoreDataHandler.swift */; };
 		19864AE01B0932FB0034AC3E /* HabitImageHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19864ADF1B0932FB0034AC3E /* HabitImageHandler.swift */; };
@@ -66,7 +67,8 @@
 		190BECB41B05595600A8ECDA /* setting2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = setting2.png; sourceTree = "<group>"; };
 		190BECBC1B0578B200A8ECDA /* delete.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = delete.png; sourceTree = "<group>"; };
 		190BECBE1B06CE8300A8ECDA /* save.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = save.png; sourceTree = "<group>"; };
-		196FE29B1B09813E0012BF9F /* BottomMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BottomMenu.swift; sourceTree = "<group>"; };
+		196FE29D1B099D2D0012BF9F /* bottomMenu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bottomMenu.png; sourceTree = "<group>"; };
+		196FE29F1B0ADC000012BF9F /* HabitMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HabitMenu.swift; sourceTree = "<group>"; };
 		1982B2901B03E988007BD023 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		19864ADD1B09269F0034AC3E /* CoreDataHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataHandler.swift; sourceTree = "<group>"; };
 		19864ADF1B0932FB0034AC3E /* HabitImageHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HabitImageHandler.swift; sourceTree = "<group>"; };
@@ -156,12 +158,13 @@
 			children = (
 				199692C11B02A30600275F4D /* AppDelegate.swift */,
 				199692C61B02A30600275F4D /* ViewController.swift */,
-				196FE29B1B09813E0012BF9F /* BottomMenu.swift */,
+				196FE29F1B0ADC000012BF9F /* HabitMenu.swift */,
 				19864AE81B096E010034AC3E /* BlackCoverScreen.swift */,
 				19864AE61B0968510034AC3E /* SettingTableView.swift */,
 				19864ADD1B09269F0034AC3E /* CoreDataHandler.swift */,
 				19864ADF1B0932FB0034AC3E /* HabitImageHandler.swift */,
 				199692C81B02A30600275F4D /* Main.storyboard */,
+				196FE29D1B099D2D0012BF9F /* bottomMenu.png */,
 				190BECBC1B0578B200A8ECDA /* delete.png */,
 				190BECB41B05595600A8ECDA /* setting2.png */,
 				190BECBE1B06CE8300A8ECDA /* save.png */,
@@ -308,6 +311,7 @@
 				199692CA1B02A30600275F4D /* Main.storyboard in Resources */,
 				190BECB61B05595600A8ECDA /* setting2.png in Resources */,
 				190BECBF1B06CE8300A8ECDA /* save.png in Resources */,
+				196FE29E1B099D2D0012BF9F /* bottomMenu.png in Resources */,
 				199692CF1B02A30600275F4D /* LaunchScreen.xib in Resources */,
 				190BECBD1B0578B200A8ECDA /* delete.png in Resources */,
 				199692CC1B02A30600275F4D /* Images.xcassets in Resources */,
@@ -330,6 +334,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				199693021B02A32700275F4D /* CVCalendarManager.swift in Sources */,
+				196FE2A01B0ADC000012BF9F /* HabitMenu.swift in Sources */,
 				19864ADE1B09269F0034AC3E /* CoreDataHandler.swift in Sources */,
 				199692FE1B02A32700275F4D /* CVAuxiliaryView.swift in Sources */,
 				1996930B1B02A32700275F4D /* CVCalendarViewAppearance.swift in Sources */,
@@ -342,7 +347,6 @@
 				1996930C1B02A32700275F4D /* CVCalendarViewAppearanceDelegate.swift in Sources */,
 				199693151B02A32700275F4D /* CVSelectionType.swift in Sources */,
 				1996930A1B02A32700275F4D /* CVCalendarViewAnimatorDelegate.swift in Sources */,
-				196FE29C1B09813E0012BF9F /* BottomMenu.swift in Sources */,
 				19864AE91B096E010034AC3E /* BlackCoverScreen.swift in Sources */,
 				199693041B02A32700275F4D /* CVCalendarMenuViewDelegate.swift in Sources */,
 				199693141B02A32700275F4D /* CVScrollDirection.swift in Sources */,
