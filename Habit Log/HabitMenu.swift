@@ -37,7 +37,7 @@ class HabitMenu: UITableView {
 
 extension HabitMenu: UITableViewDelegate, UITableViewDataSource {
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.coreDataHandler!.all_habits.count
+        return self.coreDataHandler!.all_habits.count + 1
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -47,9 +47,14 @@ extension HabitMenu: UITableViewDelegate, UITableViewDataSource {
             cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "Cell")
         }
         
-        cell?.textLabel!.text = self.coreDataHandler?.all_habits[indexPath.row].valueForKey("title") as? String
-        cell?.textLabel!.font = UIFont(name: "Avenir", size: 20)
-        cell?.imageView!.image  = self.habitImageHandler?.getHabitImageAtIndex(indexPath.row)
+        if indexPath.row == self.coreDataHandler?.all_habits.count {
+            cell?.imageView?.image = UIImage(named: "add.png")
+            cell?.textLabel!.text = "Add"
+        } else {
+            cell?.textLabel!.text = self.coreDataHandler?.all_habits[indexPath.row].valueForKey("title") as? String
+            cell?.textLabel!.font = UIFont(name: "Avenir", size: 20)
+            cell?.imageView!.image  = self.habitImageHandler?.getHabitImageAtIndex(indexPath.row)
+        }
         
         if self.coreDataHandler?.getSelectedHabitIndex() == indexPath.row {
             cell?.textLabel!.font = UIFont(name: "Avenir-Heavy", size: 20)

@@ -182,7 +182,7 @@ class CoreDataHandler {
         
         var logs = all_habits[selected_habit_index].mutableSetValueForKey("logs")
 
-        var predicate = NSPredicate(format: "year == %@ AND month == %@ AND day == %@", year, month, day)
+        var predicate = NSPredicate(format: "year == %d AND month == %d AND day == %d", year, month, day)
         var filteredLogs = logs.filteredSetUsingPredicate(predicate)
 
         for log in filteredLogs {
