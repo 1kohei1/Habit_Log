@@ -26,6 +26,7 @@ class ViewController: UIViewController, CoreDataHandlerDelegate {
     var settingTableView: SettingTableView = SettingTableView()
     var blackCoverScreen: BlackCoverScreen = BlackCoverScreen()
     var habitMenu: HabitMenu?
+    var bottomView: BottomMenu?
     
     var animationFinished = true
     var isSettingOpen = false
@@ -84,17 +85,20 @@ class ViewController: UIViewController, CoreDataHandlerDelegate {
         blackCoverScreen = BlackCoverScreen(frame: self.view.frame)
         blackCoverScreen.delegate = self
         
-        habitMenu = HabitMenu(frame: CGRectMake(-100, 28, 100, self.view.frame.size.height - 28), coreDataHandler: self.coreDataHandler!)
+        habitMenu = HabitMenu(frame: CGRectMake(-200, 28, 200, self.view.frame.size.height - 28), coreDataHandler: self.coreDataHandler!)
         habitMenu!.habitMenuDelegate = self
+        
+        bottomView = BottomMenu(frame: CGRectMake(0, self.view.frame.size.height, self.view.frame.size.width, 100))
+        bottomView?.delegate = self
         
         self.bringSubviewsToFront([self.habitTitle, self.borderLabel, whiteLabel, settingButton, deleteButton, menuButton])
         self.view.insertSubview(settingTableView, belowSubview: self.habitTitle)
         self.view.insertSubview(blackCoverScreen, belowSubview: settingTableView)
         self.view.addSubview(habitMenu!)
+        self.view.addSubview(bottomView!)
         
         self.menuButton.alpha = 1
         self.menuButton.hidden = false
-        printFrame("menuButton", frame: self.menuButton.frame)
     }
     
     func reflectHabits() {
@@ -118,7 +122,8 @@ class ViewController: UIViewController, CoreDataHandlerDelegate {
             
             self.settingTableView.frame.origin.y = borderLabelFrame.origin.y + borderLabelFrame.size.height + yOffset
             self.blackCoverScreen.alpha = self.blackCoverScreen.isSettingOpen ? 0.0 : 0.45
-            self.habitMenu!.frame.origin.x = -100
+            self.habitMenu!.frame.origin.x = -200
+            self.bottomView!.frame.origin.y = self.view.frame.size.height
             
             }, completion: {(val: Bool) -> Void in
                 var imageName = self.blackCoverScreen.isSettingOpen ? "setting2.png" : "save.png"
@@ -137,6 +142,7 @@ class ViewController: UIViewController, CoreDataHandlerDelegate {
                     
                     self.coreDataHandler!.updateHabit(self.selected_habit_index, info: info)
                     self.habitTitle.text = info.valueForKey("title") as? String
+                    self.habitMenu?.reloadData()
                 }
                 
                 self.blackCoverScreen.isSettingOpen = !self.blackCoverScreen.isSettingOpen
@@ -150,14 +156,12 @@ class ViewController: UIViewController, CoreDataHandlerDelegate {
     }
     
     @IBAction func deletePushed(sender: AnyObject) {
-//        println(selectedDayView)
-//        self.supplementaryView(shouldDisplayOnDayView: selectedDayView!)
-
         self.coreDataHandler!.deleteHabit(selected_habit_index)
         selected_habit_index = self.coreDataHandler!.getSelectedHabitIndex()
         self.coreDataHandler!.updateHabit(selected_habit_index, info: NSDictionary(object: true, forKey: "isSelected"))
         
         self.settingPushed(1)
+        self.habitMenu?.reloadData()
         reflectHabits()
         self.calendarView.commitCalendarViewUpdate()
     }
@@ -167,6 +171,7 @@ class ViewController: UIViewController, CoreDataHandlerDelegate {
         UIView.animateWithDuration(0.45, delay: 0, options: UIViewAnimationOptions.CurveEaseIn, animations: {
             self.habitMenu!.frame.origin.x = 0
             self.blackCoverScreen.alpha = 0.45
+            self.bottomView!.frame.origin.y = self.view.frame.size.height
             }, completion: {(val: Bool) -> Void in
                 self.blackCoverScreen.userInteractionEnabled = true
         })
@@ -182,7 +187,7 @@ class ViewController: UIViewController, CoreDataHandlerDelegate {
     }
 }
 
-extension ViewController: SettingTableViewProtocol, BlackCoverScreenProtocol, HabitMenuProtocol {
+extension ViewController: SettingTableViewProtocol, BlackCoverScreenProtocol, HabitMenuProtocol, BottomMenuProtocol {
     func shouldEndEditing() {
         self.view.endEditing(true)
     }
@@ -190,7 +195,7 @@ extension ViewController: SettingTableViewProtocol, BlackCoverScreenProtocol, Ha
     func blackCoverScreenTapped(sender: AnyObject) {
         self.blackCoverScreen.userInteractionEnabled = false
         UIView.animateWithDuration(0.45, delay: 0, options: UIViewAnimationOptions.CurveEaseIn, animations: {
-            self.habitMenu!.frame.origin.x = -100
+            self.habitMenu!.frame.origin.x = -200
             self.blackCoverScreen.alpha = 0.0
             }, completion: {(val: Bool) -> Void in
                 self.blackCoverScreen.userInteractionEnabled = true
@@ -208,6 +213,20 @@ extension ViewController: SettingTableViewProtocol, BlackCoverScreenProtocol, Ha
     func cellSelected(selected_index: Int) {
         
     }
+    
+    func buttonPushed() {
+        let date = selectedDayView!.date
+        if self.coreDataHandler!.checkSupplementaryView(selected_habit_index, year: date.year, month: date.month, day: date.day) {
+            
+            self.bottomView?.setButtonOff()
+            self.coreDataHandler?.deleteLog(selected_habit_index, year: date.year, month: date.month, day: date.day)
+        } else {
+            self.bottomView?.setButtonOn()
+            self.coreDataHandler?.addLog(selected_habit_index, year: date.year, month: date.month, day: date.day)
+            selectedDayView!.supplementarySetup()
+            selectedDayView!.circleView?.fillColor = UIColor.clearColor()
+        }
+    }
 }
 
 extension ViewController: CVCalendarMenuViewDelegate {
@@ -222,13 +241,22 @@ extension ViewController: CVCalendarViewDelegate {
     }
     
     func didSelectDayView(dayView: CVCalendarDayView) {
-        let date = dayView.date
+        bottomView!.showBottom()
+        if self.supplementaryView(shouldDisplayOnDayView: dayView) {
+            bottomView!.setButtonOn()
+        } else {
+            bottomView!.setButtonOff()
+        }
+        
         selectedDayView = dayView
         println("\(calendarView.presentedDate.commonDescription) is selected!")
     }
     
     func presentedDateUpdated(date: CVDate) {
         if monthLabel.text != date.globalDescription && self.animationFinished {
+            println("hello")
+            self.bottomView?.hideBottom()
+            
             let updatedMonthLabel = UILabel()
             updatedMonthLabel.textColor = monthLabel.textColor
             updatedMonthLabel.font = monthLabel.font
@@ -271,10 +299,8 @@ extension ViewController: CVCalendarViewDelegate {
     }
 
     func supplementaryView(viewOnDayView dayView: DayView) -> UIView {
-        // Show logged circle
         var circle = CVAuxiliaryView(dayView: dayView, rect: dayView.bounds, shape: CVShape.Circle)
         circle.tag = 10
-        // adjust color later
         circle.fillColor = FLAT_GREEN_COLOR
         
         dayView.dayLabel!.textColor = UIColor.whiteColor()
