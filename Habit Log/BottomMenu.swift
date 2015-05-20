@@ -65,14 +65,12 @@ class BottomMenu: UIView {
     }
     
     func showBottom() {
-        println("show Buttom")
         UIView.animateWithDuration(0.45, delay: 0, options: UIViewAnimationOptions.CurveEaseIn, animations: {
             self.frame.origin.y = self.SHOW_Y_POSITION
             }, completion: nil)
     }
     
     func hideBottom() {
-        println("hide Buttom")
         UIView.animateWithDuration(0.45, delay: 0, options: UIViewAnimationOptions.CurveEaseIn, animations: {
             self.frame.origin.y = self.HIDE_Y_POSITION
             }, completion: nil)

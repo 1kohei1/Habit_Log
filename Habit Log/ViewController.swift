@@ -241,7 +241,13 @@ extension ViewController: CVCalendarViewDelegate {
     }
     
     func didSelectDayView(dayView: CVCalendarDayView) {
-        bottomView!.showBottom()
+        
+        if selectedDayView == nil || dayView.date.month != selectedDayView!.date.month {
+            bottomView!.hideBottom()
+        } else {
+            bottomView!.showBottom()
+        }
+        
         if self.supplementaryView(shouldDisplayOnDayView: dayView) {
             bottomView!.setButtonOn()
         } else {
@@ -254,7 +260,6 @@ extension ViewController: CVCalendarViewDelegate {
     
     func presentedDateUpdated(date: CVDate) {
         if monthLabel.text != date.globalDescription && self.animationFinished {
-            println("hello")
             self.bottomView?.hideBottom()
             
             let updatedMonthLabel = UILabel()
