@@ -6,4 +6,4 @@ The app will be ready till I present at 19th.
 
 The screenshots of the app
 
-![Screen shot](https://github.com/1kohei1/Habit_Log/blob/master/Habit_Log_animation.mp4)
+![Screen shot](http://g.recordit.co/ZCqm96ZGrs.gif)
