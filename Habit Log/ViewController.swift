@@ -46,7 +46,7 @@ class ViewController: UIViewController, CoreDataHandlerDelegate {
         
         self.monthLabel.text = CVDate(date: NSDate()).globalDescription
         self.deleteButton.hidden = true
-        self.deleteButton.tintColor = UIColor.redColor()
+        self.deleteButton.tintColor = UIColor(red: 1, green: 0.231373, blue: 0.188235, alpha: 0.8)
         
         var border = CALayer()
         border.backgroundColor = UIColor.blackColor().CGColor
