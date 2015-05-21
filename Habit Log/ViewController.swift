@@ -46,6 +46,7 @@ class ViewController: UIViewController, CoreDataHandlerDelegate {
         
         self.monthLabel.text = CVDate(date: NSDate()).globalDescription
         self.deleteButton.hidden = true
+        self.deleteButton.tintColor = UIColor.redColor()
         
         var border = CALayer()
         border.backgroundColor = UIColor.blackColor().CGColor
@@ -211,7 +212,29 @@ extension ViewController: SettingTableViewProtocol, BlackCoverScreenProtocol, Ha
     }
     
     func cellSelected(selected_index: Int) {
+        self.coreDataHandler?.updateHabit(selected_habit_index, info: NSDictionary(dictionary: ["isSelected": false]))
         
+        selected_habit_index = selected_index
+        
+        if selected_habit_index == self.coreDataHandler?.all_habits.count {
+            self.coreDataHandler?.addHabit()
+        } else {
+            self.coreDataHandler?.updateHabit(selected_habit_index, info: ["isSelected": true])
+        }
+        printFrame("calendarMenu", frame: self.menuView!.frame)
+        printFrame("presentedMonthView", frame: self.menuView!.frame)
+        printFrame("calendarView", frame: self.calendarView!.contentController!.presentedMonthView.frame)
+        
+        
+        self.calendarView!.contentController!.presentedMonthView.reloadViewsWithRect(CGRectMake(0, 0, self.calendarView!.frame.size.width, self.calendarView!.frame.size.height))
+//        self.calendarView!.contentController!.presentedMonthView.updateAppearance(CGRectMake(0, 0, self.calendarView!.frame.size.width, self.calendarView!.frame.size.height))
+//        self.calendarView!.contentController!.presentedMonthView.updateInteractiveView()
+//        self.calendarView.commitCalendarViewUpdate()
+
+        printFrame("calendarMenu", frame: self.menuView!.frame)
+        printFrame("presentedMonthView", frame: self.menuView!.frame)
+        printFrame("calendarView", frame: self.calendarView!.frame)
+        self.reflectHabits()
     }
     
     func buttonPushed() {
@@ -220,6 +243,7 @@ extension ViewController: SettingTableViewProtocol, BlackCoverScreenProtocol, Ha
             
             self.bottomView?.setButtonOff()
             self.coreDataHandler?.deleteLog(selected_habit_index, year: date.year, month: date.month, day: date.day)
+            selectedDayView?.viewWithTag(10)?.removeFromSuperview()
         } else {
             self.bottomView?.setButtonOn()
             self.coreDataHandler?.addLog(selected_habit_index, year: date.year, month: date.month, day: date.day)
@@ -242,10 +266,13 @@ extension ViewController: CVCalendarViewDelegate {
     
     func didSelectDayView(dayView: CVCalendarDayView) {
         
-        if selectedDayView == nil || dayView.date.month != selectedDayView!.date.month {
-            bottomView!.hideBottom()
-        } else {
+        let today = NSDate()
+        let currentMonth = NSCalendar.currentCalendar().component(NSCalendarUnit.CalendarUnitMonth, fromDate: today)
+
+        if selectedDayView?.date.month == dayView.date.month || dayView.date.month == currentMonth {
             bottomView!.showBottom()
+        } else {
+            bottomView!.hideBottom()
         }
         
         if self.supplementaryView(shouldDisplayOnDayView: dayView) {
